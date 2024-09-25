@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package odddotnet.proto.spans/v1;
+package odddotnet.proto.spans.v1;
 
 option csharp_namespace = "OddDotNet.Proto.Spans.V1";
 option java_multiple_files = true;
