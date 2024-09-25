@@ -1,6 +1,12 @@
 syntax = "proto3";
 
-option csharp_namespace = "OddDotNet";
+package odddotnet.proto.spans.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Spans.V1";
+option java_multiple_files = true;
+option java_package = "com.odddotnet.proto.spans.v1";
+option java_outer_classname = "SpansProto";
+option go_package = "go.odddotnet.com/proto/otlp/spans/v1";
 
 message Span {
   InstrumentationScope instrumentationScope = 1;
