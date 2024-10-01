@@ -74,11 +74,7 @@ message WhereSpanOrFilter {
 }
 
 message Duration {
-  oneof value {
-    uint64 secondsValue = 1;
-    uint64 millisecondsValue = 2;
-    uint64 minutesValue = 3;
-  }
+  int32 milliseconds = 1;
 }
 
 message StringProperty {
