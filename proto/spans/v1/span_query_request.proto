@@ -17,14 +17,14 @@ message SpanQueryRequest {
 }
 
 message WhereSpanFilter {
-  oneof Filter {
+  oneof value {
     WhereSpanPropertyFilter spanProperty = 1;
     WhereSpanOrFilter spanOr = 2;
   }
 }
 
 message Take {
-  oneof TakeType {
+  oneof value {
     TakeFirst takeFirst = 1;
     TakeAll takeAll = 2;
     TakeExact takeExact = 3;
@@ -40,7 +40,7 @@ message TakeExact {
 }
 
 message WhereSpanPropertyFilter {
-  oneof property {
+  oneof value {
     StringProperty name = 1;
     ByteStringProperty spanId = 2;
     ByteStringProperty traceId = 3;
@@ -82,27 +82,9 @@ message StringProperty {
   optional string compare = 2;
 }
 
-enum StringCompareAsType {
-  STRING_COMPARE_AS_TYPE_NONE = 0;
-  STRING_COMPARE_AS_TYPE_EQUALS = 1;
-  STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  STRING_COMPARE_AS_TYPE_CONTAINS = 3;
-  STRING_COMPARE_AS_TYPE_NOT_CONTAINS = 4;
-  STRING_COMPARE_AS_TYPE_IS_EMPTY = 5;
-  STRING_COMPARE_AS_TYPE_IS_NOT_EMPTY = 6;
-}
-
 message ByteStringProperty {
   ByteStringCompareAsType compareAs = 1;
   optional bytes compare = 2;
-}
-
-enum ByteStringCompareAsType {
-  BYTE_STRING_COMPARE_AS_TYPE_NONE = 0;
-  BYTE_STRING_COMPARE_AS_TYPE_EQUALS = 1;
-  BYTE_STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  BYTE_STRING_COMPARE_AS_TYPE_EMPTY = 3;
-  BYTE_STRING_COMPARE_AS_TYPE_NOT_EMPTY = 4;
 }
 
 message BoolProperty {
@@ -110,85 +92,29 @@ message BoolProperty {
   optional bool compare = 2;
 }
 
-enum BoolCompareAsType {
-  BOOL_COMPARE_AS_TYPE_NONE = 0;
-  BOOL_COMPARE_AS_TYPE_EQUALS = 1;
-  BOOL_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-}
-
 message UInt64Property {
-  UInt64CompareAsType compareAs = 1;
+  NumberCompareAsType compareAs = 1;
   optional uint64 compare = 2;
 }
 
-enum UInt64CompareAsType {
-  U_INT_64_COMPARE_AS_TYPE_NONE = 0;
-  U_INT_64_COMPARE_AS_TYPE_EQUALS = 1;
-  U_INT_64_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  U_INT_64_COMPARE_AS_TYPE_GREATER_THAN = 3;
-  U_INT_64_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
-  U_INT_64_COMPARE_AS_TYPE_LESS_THAN = 5;
-  U_INT_64_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
-}
-
 message UInt32Property {
-  UInt32CompareAsType compareAs = 1;
+  NumberCompareAsType compareAs = 1;
   optional uint32 compare = 2;
 }
 
-enum UInt32CompareAsType {
-  U_INT_32_COMPARE_AS_TYPE_NONE = 0;
-  U_INT_32_COMPARE_AS_TYPE_EQUALS = 1;
-  U_INT_32_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  U_INT_32_COMPARE_AS_TYPE_GREATER_THAN = 3;
-  U_INT_32_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
-  U_INT_32_COMPARE_AS_TYPE_LESS_THAN = 5;
-  U_INT_32_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
-}
-
 message Int64Property {
-  Int64CompareAsType compareAs = 1;
+  NumberCompareAsType compareAs = 1;
   optional int64 compare = 2;
 }
 
-enum Int64CompareAsType {
-  INT_64_COMPARE_AS_TYPE_NONE = 0;
-  INT_64_COMPARE_AS_TYPE_EQUALS = 1;
-  INT_64_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  INT_64_COMPARE_AS_TYPE_GREATER_THAN = 3;
-  INT_64_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
-  INT_64_COMPARE_AS_TYPE_LESS_THAN = 5;
-  INT_64_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
-}
-
 message Int32Property {
-  Int32CompareAsType compareAs = 1;
+  NumberCompareAsType compareAs = 1;
   optional int32 compare = 2;
 }
 
-enum Int32CompareAsType {
-  INT_32_COMPARE_AS_TYPE_NONE = 0;
-  INT_32_COMPARE_AS_TYPE_EQUALS = 1;
-  INT_32_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  INT_32_COMPARE_AS_TYPE_GREATER_THAN = 3;
-  INT_32_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
-  INT_32_COMPARE_AS_TYPE_LESS_THAN = 5;
-  INT_32_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
-}
-
 message DoubleProperty {
-  DoubleCompareAsType compareAs = 1;
+  NumberCompareAsType compareAs = 1;
   optional double compare = 2;
-}
-
-enum DoubleCompareAsType {
-  DOUBLE_COMPARE_AS_TYPE_NONE = 0;
-  DOUBLE_COMPARE_AS_TYPE_EQUALS = 1;
-  DOUBLE_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  DOUBLE_COMPARE_AS_TYPE_GREATER_THAN = 3;
-  DOUBLE_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
-  DOUBLE_COMPARE_AS_TYPE_LESS_THAN = 5;
-  DOUBLE_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
 }
 
 message SpanStatusCodeProperty {
@@ -199,12 +125,6 @@ message SpanStatusCodeProperty {
 message SpanKindProperty {
   EnumCompareAsType compareAs = 1;
   SpanKind compare = 2;
-}
-
-enum EnumCompareAsType {
-  ENUM_COMPARE_AS_TYPE_NONE = 0;
-  ENUM_COMPARE_AS_TYPE_EQUALS = 1;
-  ENUM_COMPARE_AS_TYPE_NOT_EQUALS = 2;
 }
 
 message KeyValueProperty {
@@ -218,9 +138,42 @@ message KeyValueProperty {
   }
 }
 
-enum KeyValueCompareAsType {
-  KEY_VALUE_COMPARE_AS_TYPE_NONE = 0;
-  KEY_VALUE_COMPARE_AS_TYPE_EQUALS = 1;
-  KEY_VALUE_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  
+enum NumberCompareAsType {
+  NUMBER_COMPARE_AS_TYPE_NONE = 0;
+  NUMBER_COMPARE_AS_TYPE_EQUALS = 1;
+  NUMBER_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  NUMBER_COMPARE_AS_TYPE_GREATER_THAN = 3;
+  NUMBER_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
+  NUMBER_COMPARE_AS_TYPE_LESS_THAN = 5;
+  NUMBER_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
+}
+
+enum EnumCompareAsType {
+  ENUM_COMPARE_AS_TYPE_NONE = 0;
+  ENUM_COMPARE_AS_TYPE_EQUALS = 1;
+  ENUM_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+}
+
+enum BoolCompareAsType {
+  BOOL_COMPARE_AS_TYPE_NONE = 0;
+  BOOL_COMPARE_AS_TYPE_EQUALS = 1;
+  BOOL_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+}
+
+enum ByteStringCompareAsType {
+  BYTE_STRING_COMPARE_AS_TYPE_NONE = 0;
+  BYTE_STRING_COMPARE_AS_TYPE_EQUALS = 1;
+  BYTE_STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  BYTE_STRING_COMPARE_AS_TYPE_EMPTY = 3;
+  BYTE_STRING_COMPARE_AS_TYPE_NOT_EMPTY = 4;
+}
+
+enum StringCompareAsType {
+  STRING_COMPARE_AS_TYPE_NONE = 0;
+  STRING_COMPARE_AS_TYPE_EQUALS = 1;
+  STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  STRING_COMPARE_AS_TYPE_CONTAINS = 3;
+  STRING_COMPARE_AS_TYPE_NOT_CONTAINS = 4;
+  STRING_COMPARE_AS_TYPE_IS_EMPTY = 5;
+  STRING_COMPARE_AS_TYPE_IS_NOT_EMPTY = 6;
 }
