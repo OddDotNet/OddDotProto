@@ -1,14 +1,10 @@
 syntax = "proto3";
 
-package odddotnet.proto.spans.v1;
+package odddotnet.proto.trace.v1;
 
-option csharp_namespace = "OddDotNet.Proto.Spans.V1";
-option java_multiple_files = true;
-option java_package = "com.odddotnet.proto.spans.v1";
-option java_outer_classname = "SpansProto";
-option go_package = "go.odddotnet.com/proto/otlp/spans/v1";
+option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 
-import "../../../submodules/opentelemetry/proto/trace/v1/trace.proto";
+import "opentelemetry/proto/trace/v1/trace.proto";
 
 message SpanQueryRequest {
   repeated WhereSpanFilter filters = 1;
@@ -119,12 +115,12 @@ message DoubleProperty {
 
 message SpanStatusCodeProperty {
   EnumCompareAsType compareAs = 1;
-  opentelemetry.proto.trace.v1.SpanStatusCode compare = 2;
+  opentelemetry.proto.trace.v1.Status.StatusCode compare = 2;
 }
 
 message SpanKindProperty {
   EnumCompareAsType compareAs = 1;
-  opentelemetry.proto.trace.v1.SpanKind compare = 2;
+  opentelemetry.proto.trace.v1.Span.SpanKind compare = 2;
 }
 
 message KeyValueProperty {

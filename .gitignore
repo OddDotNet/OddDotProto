@@ -423,3 +423,6 @@ FodyWeavers.xsd
 
 # Mac stuff
 .DS_Store
+
+# Protobuf selected output directory
+out
