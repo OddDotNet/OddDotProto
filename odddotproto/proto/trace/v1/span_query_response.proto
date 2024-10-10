@@ -4,16 +4,8 @@ package odddotnet.proto.trace.v1;
 
 option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 
-import "opentelemetry/proto/trace/v1/trace.proto";
-import "opentelemetry/proto/resource/v1/resource.proto";
-import "opentelemetry/proto/common/v1/common.proto";
+import "flat_span.proto";
 
 message SpanQueryResponse {
-  repeated SpanQueryResponseData spans = 1;
-}
-
-message SpanQueryResponseData {
-  opentelemetry.proto.trace.v1.Span span = 1;
-  opentelemetry.proto.resource.v1.Resource resource = 2;
-  opentelemetry.proto.common.v1.InstrumentationScope instrumentationScope = 3;
+  repeated FlatSpan spans = 1;
 }
