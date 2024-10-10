@@ -8,8 +8,8 @@ option java_package = "com.odddotnet.proto.spans.v1";
 option java_outer_classname = "SpansProto";
 option go_package = "go.odddotnet.com/proto/otlp/spans/v1";
 
-import "proto/spans/v1/span.proto";
+import "../../../submodules/opentelemetry/proto/resource/v1/resource.proto"
 
 message SpanQueryResponse {
-  repeated Span spans = 1;
+  opentelemetry.proto.trace.v1.TracesData traces = 1;
 }

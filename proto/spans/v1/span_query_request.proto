@@ -8,7 +8,7 @@ option java_package = "com.odddotnet.proto.spans.v1";
 option java_outer_classname = "SpansProto";
 option go_package = "go.odddotnet.com/proto/otlp/spans/v1";
 
-import "proto/spans/v1/span.proto";
+inport "../../../submodules/opentelemetry/proto/trace/v1/trace.proto";
 
 message SpanQueryRequest {
   repeated WhereSpanFilter filters = 1;
@@ -119,12 +119,12 @@ message DoubleProperty {
 
 message SpanStatusCodeProperty {
   EnumCompareAsType compareAs = 1;
-  SpanStatusCode compare = 2;
+  opentelemetry.proto.trace.v1.SpanStatusCode compare = 2;
 }
 
 message SpanKindProperty {
   EnumCompareAsType compareAs = 1;
-  SpanKind compare = 2;
+  opentelemetry.proto.trace.v1.SpanKind compare = 2;
 }
 
 message KeyValueProperty {
