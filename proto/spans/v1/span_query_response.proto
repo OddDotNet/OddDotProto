@@ -8,7 +8,7 @@ option java_package = "com.odddotnet.proto.spans.v1";
 option java_outer_classname = "SpansProto";
 option go_package = "go.odddotnet.com/proto/otlp/spans/v1";
 
-import "../../../submodules/opentelemetry/proto/resource/v1/resource.proto"
+import "../../../submodules/opentelemetry/proto/resource/v1/resource.proto";
 
 message SpanQueryResponse {
   opentelemetry.proto.trace.v1.TracesData traces = 1;

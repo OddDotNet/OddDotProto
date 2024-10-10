@@ -8,7 +8,7 @@ option java_package = "com.odddotnet.proto.spans.v1";
 option java_outer_classname = "SpansProto";
 option go_package = "go.odddotnet.com/proto/otlp/spans/v1";
 
-inport "../../../submodules/opentelemetry/proto/trace/v1/trace.proto";
+import "../../../submodules/opentelemetry/proto/trace/v1/trace.proto";
 
 message SpanQueryRequest {
   repeated WhereSpanFilter filters = 1;
