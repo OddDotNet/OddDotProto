@@ -12,4 +12,6 @@ message FlatSpan {
     opentelemetry.proto.trace.v1.Span span = 1;
     opentelemetry.proto.resource.v1.Resource resource = 2;
     opentelemetry.proto.common.v1.InstrumentationScope instrumentationScope = 3;
+    string resourceSchemaUrl = 4;
+    string instrumentationScopeSchemaUrl = 5;
 }
