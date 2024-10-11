@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package odddotnet.proto.trace.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Trace.V1";
+
+import "flat_span.proto";
+
+message SpanQueryResponse {
+  repeated FlatSpan spans = 1;
+}

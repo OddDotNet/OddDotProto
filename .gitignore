@@ -406,6 +406,9 @@ FodyWeavers.xsd
 **/.idea/shelf/*
 **/.idea/dictionaries
 **/.idea/httpRequests/
+**/.idea/encodings.xml
+**/.idea/indexLayout.xml
+**/.idea/projectSettingsUpdater.xml
 
 # Sensitive or high-churn files
 **/.idea/**/dataSources/
@@ -423,3 +426,6 @@ FodyWeavers.xsd
 
 # Mac stuff
 .DS_Store
+
+# Protobuf selected output directory
+out
