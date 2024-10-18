@@ -138,7 +138,7 @@ message KeyValueProperty {
 
 message ArrayProperty {
   ArrayCompareAsType compareAs = 1;
-  opentelemetry.proto.common.v1.ArrayValue compare = 2;
+  opentelemetry.proto.common.v1.AnyValue compare = 2;
 }
 
 enum ArrayCompareAsType {
