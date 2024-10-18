@@ -8,8 +8,10 @@ import "span_query_request.proto";
 import "span_query_response.proto";
 import "span_reset_request.proto";
 import "span_reset_response.proto";
+import "flat_span.proto";
 
 service SpanQueryService {
   rpc Query(SpanQueryRequest) returns (SpanQueryResponse);
-  rpc Reset(SpanResetRequest) returns (SpanResetResponse); 
+  rpc Reset(SpanResetRequest) returns (SpanResetResponse);
+  rpc Stream(SpanQueryRequest) returns (stream FlatSpan); 
 }
