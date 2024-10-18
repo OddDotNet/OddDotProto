@@ -1,0 +1,30 @@
+name: Tag
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.TAG_TOKEN }}
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.0.0
+        with:
+          versionSpec: '6.x'
+      - name: Execute GitVersion
+        id: version_step
+        uses: gittools/actions/gitversion/execute@v3.0.0
+        with:
+          useConfigFile: true
+      - name: Git Tag
+        run: git tag v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
+      - name: Push Tag
+        run: git push origin v${{ steps.version_step.outputs.GitVersion_MajorMinorPatch }}
