@@ -144,6 +144,7 @@ message ArrayProperty {
 enum ArrayCompareAsType {
   ARRAY_COMPARE_AS_TYPE_NONE = 0;
   ARRAY_COMPARE_AS_TYPE_CONTAINS = 1;
+  ARRAY_COMPARE_AS_TYPE_DOES_NOT_CONTAIN = 2;
 }
 
 enum NumberCompareAsType {
