@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package odddotnet.proto.metrics.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
+
+import "odddotproto/proto/metrics/v1/metric_query_request.proto";
+import "odddotproto/proto/metrics/v1/metric_query_response.proto";
+
+service MetricQueryService {
+    rpc Query(MetricQueryRequest) returns (MetricQueryResponse);
+}
