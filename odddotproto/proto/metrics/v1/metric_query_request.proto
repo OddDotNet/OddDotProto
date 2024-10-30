@@ -112,11 +112,11 @@ message ExponentialHistogramDataPointFilter {
 
 message NumberDataPointFilter {
     oneof value {
-        odddotnet.proto.common.v1.KeyValueProperty numberDataPointAttribute = 1;
-        odddotnet.proto.common.v1.UInt64Property numberDataPointStartTimeUnixNano = 2;
-        odddotnet.proto.common.v1.UInt64Property numberDataPointTimeUnixNano = 3;
-        odddotnet.proto.common.v1.DoubleProperty numberDataPointValueAsDouble = 4;
-        odddotnet.proto.common.v1.Int64Property numberDataPointValueAsInt = 5;
+        odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+        odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 2;
+        odddotnet.proto.common.v1.UInt64Property timeUnixNano = 3;
+        odddotnet.proto.common.v1.DoubleProperty valueAsDouble = 4;
+        odddotnet.proto.common.v1.Int64Property valueAsInt = 5;
         ExemplarFilter exemplar = 6;
         odddotnet.proto.common.v1.UInt32Property flags = 7;
     }

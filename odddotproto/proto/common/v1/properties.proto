@@ -44,16 +44,6 @@ message StringProperty {
     optional double compare = 2;
   }
   
-//   message SpanStatusCodeProperty {
-//     EnumCompareAsType compareAs = 1;
-//     opentelemetry.proto.trace.v1.Status.StatusCode compare = 2;
-//   }
-  
-//   message SpanKindProperty {
-//     EnumCompareAsType compareAs = 1;
-//     opentelemetry.proto.trace.v1.Span.SpanKind compare = 2;
-//   }
-  
   message KeyValueProperty {
     string key = 1;
     oneof value {
