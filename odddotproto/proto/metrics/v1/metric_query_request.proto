@@ -143,7 +143,6 @@ message ExemplarFilter {
         odddotnet.proto.common.v1.Int64Property valueAsInt = 4;
         odddotnet.proto.common.v1.ByteStringProperty spanId = 5;
         odddotnet.proto.common.v1.ByteStringProperty traceId = 6;
-        odddotnet.proto.common.v1.UInt32Property flags = 7;
     }
 }
 
