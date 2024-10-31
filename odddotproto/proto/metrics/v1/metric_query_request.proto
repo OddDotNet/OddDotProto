@@ -48,8 +48,8 @@ message GaugeFilter {
 message SumFilter {
     oneof value {
         NumberDataPointFilter dataPoint = 1;
-        AggregationTemporalityProperty aggregationTemporality = 13;
-        odddotnet.proto.common.v1.BoolProperty isMonotonic = 14;
+        AggregationTemporalityProperty aggregationTemporality = 2;
+        odddotnet.proto.common.v1.BoolProperty isMonotonic = 3;
     }
 }
 
