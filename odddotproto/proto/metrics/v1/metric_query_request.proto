@@ -137,13 +137,13 @@ message SummaryDataPointFilter {
 
 message ExemplarFilter {
     oneof value {
-        odddotnet.proto.common.v1.KeyValueProperty filteredAttribute = 6;
-        odddotnet.proto.common.v1.UInt64Property timeUnixNano = 7;
-        odddotnet.proto.common.v1.DoubleProperty valueAsDouble = 8;
-        odddotnet.proto.common.v1.Int64Property valueAsInt = 9;
-        odddotnet.proto.common.v1.ByteStringProperty spanId = 10;
-        odddotnet.proto.common.v1.ByteStringProperty traceId = 11;
-        odddotnet.proto.common.v1.UInt32Property flags = 12;
+        odddotnet.proto.common.v1.KeyValueProperty filteredAttribute = 1;
+        odddotnet.proto.common.v1.UInt64Property timeUnixNano = 2;
+        odddotnet.proto.common.v1.DoubleProperty valueAsDouble = 3;
+        odddotnet.proto.common.v1.Int64Property valueAsInt = 4;
+        odddotnet.proto.common.v1.ByteStringProperty spanId = 5;
+        odddotnet.proto.common.v1.ByteStringProperty traceId = 6;
+        odddotnet.proto.common.v1.UInt32Property flags = 7;
     }
 }
 
