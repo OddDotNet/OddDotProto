@@ -160,9 +160,9 @@ message AggregationTemporalityProperty {
 }
 
 message ValueAtQuantileFilter {
-    oneof value {
+    oneof property {
         odddotnet.proto.common.v1.DoubleProperty quantile = 1;
-        odddotnet.proto.common.v1.DoubleProperty quantileValue = 2;
+        odddotnet.proto.common.v1.DoubleProperty value = 2;
     }
     
 }
