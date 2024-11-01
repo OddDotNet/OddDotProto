@@ -36,6 +36,8 @@ message PropertyFilter {
         odddotnet.proto.common.v1.StringProperty description = 2;
         odddotnet.proto.common.v1.StringProperty unit = 3;
         odddotnet.proto.common.v1.KeyValueProperty metadata = 4;
+        odddotnet.proto.common.v1.StringProperty instrumentationScopeSchemaUrl = 5;
+        odddotnet.proto.common.v1.StringProperty ResourceSchemaUrl = 6;
     }
 }
 
