@@ -98,15 +98,20 @@ message ExponentialHistogramDataPointFilter {
         odddotnet.proto.common.v1.DoubleProperty sum = 5;
         odddotnet.proto.common.v1.Int32Property scale = 6;
         odddotnet.proto.common.v1.UInt64Property zeroCount = 7;
-        odddotnet.proto.common.v1.Int32Property positiveOffset = 8;
-        odddotnet.proto.common.v1.UInt64Property positiveBucketCount = 9;
-        odddotnet.proto.common.v1.Int32Property negativeOffset = 10;
-        odddotnet.proto.common.v1.UInt64Property negativeBucketCount = 11;
-        odddotnet.proto.common.v1.UInt32Property flags = 12;
-        ExemplarFilter exemplar = 13;
-        odddotnet.proto.common.v1.DoubleProperty min = 14;
-        odddotnet.proto.common.v1.DoubleProperty max = 15;
-        odddotnet.proto.common.v1.DoubleProperty zeroThreshold = 16;
+        BucketFilter positive = 8;
+        BucketFilter negative = 9;
+        odddotnet.proto.common.v1.UInt32Property flags = 10;
+        ExemplarFilter exemplar = 11;
+        odddotnet.proto.common.v1.DoubleProperty min = 12;
+        odddotnet.proto.common.v1.DoubleProperty max = 13;
+        odddotnet.proto.common.v1.DoubleProperty zeroThreshold = 14;
+    }
+}
+
+message BucketFilter {
+    oneof value {
+        odddotnet.proto.common.v1.Int32Property offset = 1;
+        odddotnet.proto.common.v1.UInt64Property bucketCount = 2;
     }
 }
 
