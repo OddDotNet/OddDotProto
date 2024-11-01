@@ -11,6 +11,6 @@ message InstrumentationScopeFilter {
         odddotnet.proto.common.v1.StringProperty name = 1;
         odddotnet.proto.common.v1.KeyValueProperty attribute = 2;
         odddotnet.proto.common.v1.StringProperty version = 3;
-        odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 5;
+        odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 4;
     }
 }
