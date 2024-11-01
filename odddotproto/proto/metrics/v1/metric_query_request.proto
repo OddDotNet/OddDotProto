@@ -134,9 +134,8 @@ message SummaryDataPointFilter {
         odddotnet.proto.common.v1.UInt64Property timeUnixNano = 3;
         odddotnet.proto.common.v1.UInt64Property count = 4;
         odddotnet.proto.common.v1.DoubleProperty sum = 5;
-        odddotnet.proto.common.v1.DoubleProperty quantile = 6;
-        odddotnet.proto.common.v1.DoubleProperty quantileValue = 7;
-        odddotnet.proto.common.v1.UInt32Property flags = 8;
+        ValueAtQuantileFilter quantileValue = 6;
+        odddotnet.proto.common.v1.UInt32Property flags = 7;
     }
 }
 
@@ -158,4 +157,12 @@ message OrFilter {
 message AggregationTemporalityProperty {
     odddotnet.proto.common.v1.EnumCompareAsType compareAs = 1;
     opentelemetry.proto.metrics.v1.AggregationTemporality compare = 2;
+}
+
+message ValueAtQuantileFilter {
+    oneof value {
+        odddotnet.proto.common.v1.DoubleProperty quantile = 1;
+        odddotnet.proto.common.v1.DoubleProperty quantileValue = 2;
+    }
+    
 }
