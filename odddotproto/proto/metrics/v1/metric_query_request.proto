@@ -20,24 +20,25 @@ message Where {
     oneof value {
         PropertyFilter property = 1;
         OrFilter or = 2;
-        GaugeFilter gauge = 3;
-        SumFilter sum = 4;
-        HistogramFilter histogram = 5;
-        ExponentialHistogramFilter exponentialHistogram = 6;
-        SummaryFilter summary = 7;
-        odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentationScope = 8;
-        odddotnet.proto.resource.v1.ResourceFilter resource = 9;
+        odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentationScope = 3;
+        odddotnet.proto.resource.v1.ResourceFilter resource = 4;
+        odddotnet.proto.common.v1.StringProperty instrumentationScopeSchemaUrl = 5;
+        odddotnet.proto.common.v1.StringProperty ResourceSchemaUrl = 6;
     }
 }
 
 message PropertyFilter {
+    reserved 4, 6, 8;
     oneof value {
         odddotnet.proto.common.v1.StringProperty name = 1;
         odddotnet.proto.common.v1.StringProperty description = 2;
         odddotnet.proto.common.v1.StringProperty unit = 3;
-        odddotnet.proto.common.v1.KeyValueProperty metadata = 4;
-        odddotnet.proto.common.v1.StringProperty instrumentationScopeSchemaUrl = 5;
-        odddotnet.proto.common.v1.StringProperty ResourceSchemaUrl = 6;
+        GaugeFilter gauge = 5;
+        SumFilter sum = 7;
+        HistogramFilter histogram = 9;
+        ExponentialHistogramFilter exponentialHistogram = 10;
+        SummaryFilter summary = 11;
+        odddotnet.proto.common.v1.KeyValueProperty metadata = 12;
     }
 }
 
@@ -76,8 +77,9 @@ message SummaryFilter {
 }
 
 message HistogramDataPointFilter {
+    reserved 1;
     oneof value {
-        odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+        odddotnet.proto.common.v1.KeyValueProperty attribute = 9;
         odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 2;
         odddotnet.proto.common.v1.UInt64Property timeUnixNano = 3;
         odddotnet.proto.common.v1.UInt64Property count = 4;
@@ -85,9 +87,9 @@ message HistogramDataPointFilter {
         odddotnet.proto.common.v1.UInt64Property bucketCount = 6;
         odddotnet.proto.common.v1.DoubleProperty explicitBound = 7;
         ExemplarFilter exemplar = 8;
-        odddotnet.proto.common.v1.UInt32Property flags = 9;
-        odddotnet.proto.common.v1.DoubleProperty min = 10;
-        odddotnet.proto.common.v1.DoubleProperty max = 11;
+        odddotnet.proto.common.v1.UInt32Property flags = 10;
+        odddotnet.proto.common.v1.DoubleProperty min = 11;
+        odddotnet.proto.common.v1.DoubleProperty max = 12;
     }
 }
 
@@ -118,26 +120,28 @@ message BucketFilter {
 }
 
 message NumberDataPointFilter {
+    reserved 1;
     oneof value {
-        odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+        odddotnet.proto.common.v1.KeyValueProperty attribute = 7;
         odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 2;
         odddotnet.proto.common.v1.UInt64Property timeUnixNano = 3;
         odddotnet.proto.common.v1.DoubleProperty valueAsDouble = 4;
-        odddotnet.proto.common.v1.Int64Property valueAsInt = 5;
-        ExemplarFilter exemplar = 6;
-        odddotnet.proto.common.v1.UInt32Property flags = 7;
+        odddotnet.proto.common.v1.Int64Property valueAsInt = 6;
+        ExemplarFilter exemplar = 5;
+        odddotnet.proto.common.v1.UInt32Property flags = 8;
     }
 }
 
 message SummaryDataPointFilter {
+    reserved 1;
     oneof value {
-        odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+        odddotnet.proto.common.v1.KeyValueProperty attribute = 7;
         odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 2;
         odddotnet.proto.common.v1.UInt64Property timeUnixNano = 3;
         odddotnet.proto.common.v1.UInt64Property count = 4;
         odddotnet.proto.common.v1.DoubleProperty sum = 5;
         ValueAtQuantileFilter quantileValue = 6;
-        odddotnet.proto.common.v1.UInt32Property flags = 7;
+        odddotnet.proto.common.v1.UInt32Property flags = 8;
     }
 }
 

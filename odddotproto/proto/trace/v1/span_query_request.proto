@@ -7,52 +7,76 @@ option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 import "odddotproto/proto/common/v1/common.proto";
 import "odddotproto/proto/common/v1/properties.proto";
 import "opentelemetry/proto/trace/v1/trace.proto";
+import "odddotproto/proto/common/v1/filters.proto";
+import "odddotproto/proto/resource/v1/resource_filters.proto";
 
 message SpanQueryRequest {
-  repeated WhereFilter filters = 1;
+  repeated Where filters = 1;
   odddotnet.proto.common.v1.Take take = 2;
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
-message WhereFilter {
+message Where {
   oneof value {
-    WherePropertyFilter property = 1;
-    WhereOrFilter or = 2;
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentationScope = 3;
+    odddotnet.proto.resource.v1.ResourceFilter resource = 4;
+    odddotnet.proto.common.v1.StringProperty instrumentationScopeSchemaUrl = 5;
+    odddotnet.proto.common.v1.StringProperty ResourceSchemaUrl = 6;
   }
 }
 
-message WherePropertyFilter {
+message PropertyFilter {
   oneof value {
-    odddotnet.proto.common.v1.StringProperty name = 1;
+    odddotnet.proto.common.v1.ByteStringProperty traceId = 1;
     odddotnet.proto.common.v1.ByteStringProperty spanId = 2;
-    odddotnet.proto.common.v1.ByteStringProperty traceId = 3;
+    odddotnet.proto.common.v1.StringProperty traceState = 3;
     odddotnet.proto.common.v1.ByteStringProperty parentSpanId = 4;
-    odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 5;
-    odddotnet.proto.common.v1.UInt64Property endTimeUnixNano = 6;
-    SpanStatusCodeProperty statusCode = 7;
-    SpanKindProperty kind = 8;
+    odddotnet.proto.common.v1.StringProperty name = 5;
+    SpanKindProperty kind = 6;
+    odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 7;
+    odddotnet.proto.common.v1.UInt64Property endTimeUnixNano = 8;
     odddotnet.proto.common.v1.KeyValueProperty attribute = 9;
-    odddotnet.proto.common.v1.UInt64Property eventTimeUnixNano = 10;
-    odddotnet.proto.common.v1.StringProperty eventName = 11;
-    odddotnet.proto.common.v1.ByteStringProperty linkTraceId = 12;
-    odddotnet.proto.common.v1.ByteStringProperty linkSpanId = 13;
-    odddotnet.proto.common.v1.StringProperty linkTraceState = 14;
-    odddotnet.proto.common.v1.UInt32Property linkFlags = 15;
+    odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 10;
+    EventFilter event = 11;
+    odddotnet.proto.common.v1.UInt32Property droppedEventsCount = 12;
+    LinkFilter link = 13;
+    odddotnet.proto.common.v1.UInt32Property droppedLinksCount = 14;
+    StatusFilter status = 15;
     odddotnet.proto.common.v1.UInt32Property flags = 16;
-    odddotnet.proto.common.v1.StringProperty traceState = 17;
-    odddotnet.proto.common.v1.KeyValueProperty eventAttribute = 18;
-    odddotnet.proto.common.v1.KeyValueProperty linkAttribute = 19;
-    odddotnet.proto.common.v1.StringProperty instrumentationScopeName = 20;
-    odddotnet.proto.common.v1.KeyValueProperty instrumentationScopeAttribute = 21;
-    odddotnet.proto.common.v1.StringProperty instrumentationScopeVersion = 22;
-    odddotnet.proto.common.v1.StringProperty instrumentationScopeSchemaUrl = 23;
-    odddotnet.proto.common.v1.StringProperty ResourceSchemaUrl = 24;
-    odddotnet.proto.common.v1.KeyValueProperty resourceAttribute = 25;
   }
 }
 
-message WhereOrFilter {
-  repeated WhereFilter filters = 1;
+message OrFilter {
+  repeated Where filters = 1;
+}
+
+message EventFilter {
+  oneof value {
+    odddotnet.proto.common.v1.UInt64Property timeUnixNano = 1;
+    odddotnet.proto.common.v1.StringProperty name = 2;
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 3;
+    odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 4;
+  }
+}
+
+message LinkFilter {
+  oneof value {
+    odddotnet.proto.common.v1.ByteStringProperty traceId = 1;
+    odddotnet.proto.common.v1.ByteStringProperty spanId = 2;
+    odddotnet.proto.common.v1.StringProperty traceState = 3;
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 4;
+    odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 5;
+    odddotnet.proto.common.v1.UInt32Property flags = 6;
+  }
+}
+
+message StatusFilter {
+  reserved 1;
+
+  odddotnet.proto.common.v1.StringProperty message = 2;
+  SpanStatusCodeProperty code = 3;
 }
 
 message SpanStatusCodeProperty {
