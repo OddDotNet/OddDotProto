@@ -4,172 +4,89 @@ package odddotnet.proto.trace.v1;
 
 option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/properties.proto";
 import "opentelemetry/proto/trace/v1/trace.proto";
+import "odddotproto/proto/common/v1/filters.proto";
+import "odddotproto/proto/resource/v1/resource_filters.proto";
 
 message SpanQueryRequest {
-  repeated WhereSpanFilter filters = 1;
-  Take take = 2;
-  optional Duration duration = 3;
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
-message WhereSpanFilter {
+message Where {
   oneof value {
-    WhereSpanPropertyFilter spanProperty = 1;
-    WhereSpanOrFilter spanOr = 2;
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentationScope = 3;
+    odddotnet.proto.resource.v1.ResourceFilter resource = 4;
+    odddotnet.proto.common.v1.StringProperty instrumentationScopeSchemaUrl = 5;
+    odddotnet.proto.common.v1.StringProperty ResourceSchemaUrl = 6;
   }
 }
 
-message Take {
+message PropertyFilter {
   oneof value {
-    TakeFirst takeFirst = 1;
-    TakeAll takeAll = 2;
-    TakeExact takeExact = 3;
+    odddotnet.proto.common.v1.ByteStringProperty traceId = 1;
+    odddotnet.proto.common.v1.ByteStringProperty spanId = 2;
+    odddotnet.proto.common.v1.StringProperty traceState = 3;
+    odddotnet.proto.common.v1.ByteStringProperty parentSpanId = 4;
+    odddotnet.proto.common.v1.StringProperty name = 5;
+    SpanKindProperty kind = 6;
+    odddotnet.proto.common.v1.UInt64Property startTimeUnixNano = 7;
+    odddotnet.proto.common.v1.UInt64Property endTimeUnixNano = 8;
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 9;
+    odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 10;
+    EventFilter event = 11;
+    odddotnet.proto.common.v1.UInt32Property droppedEventsCount = 12;
+    LinkFilter link = 13;
+    odddotnet.proto.common.v1.UInt32Property droppedLinksCount = 14;
+    StatusFilter status = 15;
+    odddotnet.proto.common.v1.UInt32Property flags = 16;
   }
 }
 
-message TakeFirst {}
-
-message TakeAll {}
-
-message TakeExact {
-  int32 count = 1;
+message OrFilter {
+  repeated Where filters = 1;
 }
 
-message WhereSpanPropertyFilter {
+message EventFilter {
   oneof value {
-    StringProperty name = 1;
-    ByteStringProperty spanId = 2;
-    ByteStringProperty traceId = 3;
-    ByteStringProperty parentSpanId = 4;
-    UInt64Property startTimeUnixNano = 5;
-    UInt64Property endTimeUnixNano = 6;
-    SpanStatusCodeProperty statusCode = 7;
-    SpanKindProperty kind = 8;
-    KeyValueProperty attribute = 9;
-    UInt64Property eventTimeUnixNano = 10;
-    StringProperty eventName = 11;
-    ByteStringProperty linkTraceId = 12;
-    ByteStringProperty linkSpanId = 13;
-    StringProperty linkTraceState = 14;
-    UInt32Property linkFlags = 15;
-    UInt32Property flags = 16;
-    StringProperty traceState = 17;
-    KeyValueProperty eventAttribute = 18;
-    KeyValueProperty linkAttribute = 19;
-    StringProperty instrumentationScopeName = 20;
-    KeyValueProperty instrumentationScopeAttribute = 21;
-    StringProperty instrumentationScopeVersion = 22;
-    StringProperty instrumentationScopeSchemaUrl = 23;
-    StringProperty ResourceSchemaUrl = 24;
-    KeyValueProperty resourceAttribute = 25;
+    odddotnet.proto.common.v1.UInt64Property timeUnixNano = 1;
+    odddotnet.proto.common.v1.StringProperty name = 2;
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 3;
+    odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 4;
   }
 }
 
-message WhereSpanOrFilter {
-  repeated WhereSpanFilter filters = 1;
+message LinkFilter {
+  oneof value {
+    odddotnet.proto.common.v1.ByteStringProperty traceId = 1;
+    odddotnet.proto.common.v1.ByteStringProperty spanId = 2;
+    odddotnet.proto.common.v1.StringProperty traceState = 3;
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 4;
+    odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 5;
+    odddotnet.proto.common.v1.UInt32Property flags = 6;
+  }
 }
 
-message Duration {
-  int32 milliseconds = 1;
-}
+message StatusFilter {
+  reserved 1;
 
-message StringProperty {
-  StringCompareAsType compareAs = 1;
-  optional string compare = 2;
-}
-
-message ByteStringProperty {
-  ByteStringCompareAsType compareAs = 1;
-  optional bytes compare = 2;
-}
-
-message BoolProperty {
-  BoolCompareAsType compareAs = 1;
-  optional bool compare = 2;
-}
-
-message UInt64Property {
-  NumberCompareAsType compareAs = 1;
-  optional uint64 compare = 2;
-}
-
-message UInt32Property {
-  NumberCompareAsType compareAs = 1;
-  optional uint32 compare = 2;
-}
-
-message Int64Property {
-  NumberCompareAsType compareAs = 1;
-  optional int64 compare = 2;
-}
-
-message Int32Property {
-  NumberCompareAsType compareAs = 1;
-  optional int32 compare = 2;
-}
-
-message DoubleProperty {
-  NumberCompareAsType compareAs = 1;
-  optional double compare = 2;
+  oneof value {
+    odddotnet.proto.common.v1.StringProperty message = 2;
+    SpanStatusCodeProperty code = 3;
+  }
 }
 
 message SpanStatusCodeProperty {
-  EnumCompareAsType compareAs = 1;
+  odddotnet.proto.common.v1.EnumCompareAsType compareAs = 1;
   opentelemetry.proto.trace.v1.Status.StatusCode compare = 2;
 }
 
 message SpanKindProperty {
-  EnumCompareAsType compareAs = 1;
+  odddotnet.proto.common.v1.EnumCompareAsType compareAs = 1;
   opentelemetry.proto.trace.v1.Span.SpanKind compare = 2;
-}
-
-message KeyValueProperty {
-  string key = 1;
-  oneof value {
-    StringProperty stringValue = 2;
-    BoolProperty boolValue = 3;
-    Int64Property int64Value = 4;
-    DoubleProperty doubleValue = 5;
-    ByteStringProperty byteStringValue = 6;
-  }
-}
-
-enum NumberCompareAsType {
-  NUMBER_COMPARE_AS_TYPE_NONE = 0;
-  NUMBER_COMPARE_AS_TYPE_EQUALS = 1;
-  NUMBER_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  NUMBER_COMPARE_AS_TYPE_GREATER_THAN = 3;
-  NUMBER_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
-  NUMBER_COMPARE_AS_TYPE_LESS_THAN = 5;
-  NUMBER_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
-}
-
-enum EnumCompareAsType {
-  ENUM_COMPARE_AS_TYPE_NONE = 0;
-  ENUM_COMPARE_AS_TYPE_EQUALS = 1;
-  ENUM_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-}
-
-enum BoolCompareAsType {
-  BOOL_COMPARE_AS_TYPE_NONE = 0;
-  BOOL_COMPARE_AS_TYPE_EQUALS = 1;
-  BOOL_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-}
-
-enum ByteStringCompareAsType {
-  BYTE_STRING_COMPARE_AS_TYPE_NONE = 0;
-  BYTE_STRING_COMPARE_AS_TYPE_EQUALS = 1;
-  BYTE_STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  BYTE_STRING_COMPARE_AS_TYPE_EMPTY = 3;
-  BYTE_STRING_COMPARE_AS_TYPE_NOT_EMPTY = 4;
-}
-
-enum StringCompareAsType {
-  STRING_COMPARE_AS_TYPE_NONE = 0;
-  STRING_COMPARE_AS_TYPE_EQUALS = 1;
-  STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
-  STRING_COMPARE_AS_TYPE_CONTAINS = 3;
-  STRING_COMPARE_AS_TYPE_NOT_CONTAINS = 4;
-  STRING_COMPARE_AS_TYPE_IS_EMPTY = 5;
-  STRING_COMPARE_AS_TYPE_IS_NOT_EMPTY = 6;
 }

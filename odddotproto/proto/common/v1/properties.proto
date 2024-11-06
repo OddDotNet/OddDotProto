@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package odddotnet.proto.common.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Common.V1";
+
+message StringProperty {
+    StringCompareAsType compareAs = 1;
+    optional string compare = 2;
+  }
+  
+  message ByteStringProperty {
+    ByteStringCompareAsType compareAs = 1;
+    optional bytes compare = 2;
+  }
+  
+  message BoolProperty {
+    BoolCompareAsType compareAs = 1;
+    optional bool compare = 2;
+  }
+  
+  message UInt64Property {
+    NumberCompareAsType compareAs = 1;
+    optional fixed64 compare = 2;
+  }
+  
+  message UInt32Property {
+    NumberCompareAsType compareAs = 1;
+    optional uint32 compare = 2;
+  }
+  
+  message Int64Property {
+    NumberCompareAsType compareAs = 1;
+    optional int64 compare = 2;
+  }
+  
+  message Int32Property {
+    NumberCompareAsType compareAs = 1;
+    optional int32 compare = 2;
+  }
+  
+  message DoubleProperty {
+    NumberCompareAsType compareAs = 1;
+    optional double compare = 2;
+  }
+  
+  message KeyValueProperty {
+    string key = 1;
+    oneof value {
+      StringProperty stringValue = 2;
+      BoolProperty boolValue = 3;
+      Int64Property int64Value = 4;
+      DoubleProperty doubleValue = 5;
+      ByteStringProperty byteStringValue = 6;
+    }
+  }
+  
+  enum NumberCompareAsType {
+    NUMBER_COMPARE_AS_TYPE_NONE = 0;
+    NUMBER_COMPARE_AS_TYPE_EQUALS = 1;
+    NUMBER_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+    NUMBER_COMPARE_AS_TYPE_GREATER_THAN = 3;
+    NUMBER_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
+    NUMBER_COMPARE_AS_TYPE_LESS_THAN = 5;
+    NUMBER_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
+  }
+  
+  enum EnumCompareAsType {
+    ENUM_COMPARE_AS_TYPE_NONE = 0;
+    ENUM_COMPARE_AS_TYPE_EQUALS = 1;
+    ENUM_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  }
+  
+  enum BoolCompareAsType {
+    BOOL_COMPARE_AS_TYPE_NONE = 0;
+    BOOL_COMPARE_AS_TYPE_EQUALS = 1;
+    BOOL_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  }
+  
+  enum ByteStringCompareAsType {
+    BYTE_STRING_COMPARE_AS_TYPE_NONE = 0;
+    BYTE_STRING_COMPARE_AS_TYPE_EQUALS = 1;
+    BYTE_STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+    BYTE_STRING_COMPARE_AS_TYPE_EMPTY = 3;
+    BYTE_STRING_COMPARE_AS_TYPE_NOT_EMPTY = 4;
+  }
+  
+  enum StringCompareAsType {
+    STRING_COMPARE_AS_TYPE_NONE = 0;
+    STRING_COMPARE_AS_TYPE_EQUALS = 1;
+    STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+    STRING_COMPARE_AS_TYPE_CONTAINS = 3;
+    STRING_COMPARE_AS_TYPE_NOT_CONTAINS = 4;
+    STRING_COMPARE_AS_TYPE_IS_EMPTY = 5;
+    STRING_COMPARE_AS_TYPE_IS_NOT_EMPTY = 6;
+  }

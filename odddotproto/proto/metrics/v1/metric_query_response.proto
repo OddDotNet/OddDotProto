@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package odddotnet.proto.metrics.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
+
+import "odddotproto/proto/metrics/v1/flat_metric.proto";
+
+message MetricQueryResponse {
+  repeated odddotnet.proto.metrics.v1.FlatMetric metrics = 1;
+}

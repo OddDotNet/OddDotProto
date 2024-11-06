@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package odddotnet.proto.common.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Common.V1";
+
+import "odddotproto/proto/common/v1/properties.proto";
+
+message InstrumentationScopeFilter {
+    oneof value {
+        odddotnet.proto.common.v1.StringProperty name = 1;
+        odddotnet.proto.common.v1.KeyValueProperty attribute = 2;
+        odddotnet.proto.common.v1.StringProperty version = 3;
+        odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 4;
+    }
+}

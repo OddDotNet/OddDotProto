@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.common.v1;
+
+option csharp_namespace = "OddDotNet.Proto.Common.V1";
+
+message Take {
+  oneof value {
+    TakeFirst takeFirst = 1;
+    TakeAll takeAll = 2;
+    TakeExact takeExact = 3;
+  }
+}
+
+message TakeFirst {}
+
+message TakeAll {}
+
+message TakeExact { int32 count = 1; }
+
+message Duration { int32 milliseconds = 1; }
