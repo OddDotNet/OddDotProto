@@ -11,6 +11,6 @@ option java_package = "io.odddotnet.proto.logs.v1";
 option java_outer_classname = "LogsProto";
 option go_package = "go.odddotnet.io/proto/otlp/logs/v1";
 
-service SpanQueryService {
+service LogQueryService {
   rpc Query(LogQueryRequest) returns (LogQueryResponse);
 }
