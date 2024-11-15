@@ -5,6 +5,10 @@ package odddotnet.proto.resource.v1;
 import "odddotproto/proto/common/v1/properties.proto";
 
 option csharp_namespace = "OddDotNet.Proto.Resource.V1";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.resource.v1";
+option java_outer_classname = "ResourceProto";
+option go_package = "go.odddotnet.io/proto/otlp/resource/v1";
 
 message ResourceFilter {
   oneof value {

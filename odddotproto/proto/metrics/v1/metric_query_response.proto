@@ -5,6 +5,10 @@ package odddotnet.proto.metrics.v1;
 import "odddotproto/proto/metrics/v1/flat_metric.proto";
 
 option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.metrics.v1";
+option java_outer_classname = "MetricsProto";
+option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
 message MetricQueryResponse {
   repeated odddotnet.proto.metrics.v1.FlatMetric metrics = 1;
