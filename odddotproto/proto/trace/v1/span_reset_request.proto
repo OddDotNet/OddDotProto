@@ -4,4 +4,5 @@ package odddotnet.proto.trace.v1;
 
 option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 
-message SpanResetRequest{}
+message SpanResetRequest{
+}

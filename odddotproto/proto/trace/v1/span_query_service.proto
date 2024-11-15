@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package odddotnet.proto.trace.v1;
 
-option csharp_namespace = "OddDotNet.Proto.Trace.V1";
-
 import "odddotproto/proto/trace/v1/span_query_request.proto";
 import "odddotproto/proto/trace/v1/span_query_response.proto";
 import "odddotproto/proto/trace/v1/span_reset_request.proto";
 import "odddotproto/proto/trace/v1/span_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 
 service SpanQueryService {
   rpc Query(SpanQueryRequest) returns (SpanQueryResponse);

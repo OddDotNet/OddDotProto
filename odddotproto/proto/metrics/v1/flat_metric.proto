@@ -2,16 +2,16 @@ syntax = "proto3";
 
 package odddotnet.proto.metrics.v1;
 
-option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
-
+import "opentelemetry/proto/common/v1/common.proto";
 import "opentelemetry/proto/metrics/v1/metrics.proto";
 import "opentelemetry/proto/resource/v1/resource.proto";
-import "opentelemetry/proto/common/v1/common.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
 
 message FlatMetric {
-    opentelemetry.proto.metrics.v1.Metric metric = 1;
-    opentelemetry.proto.resource.v1.Resource resource = 2;
-    opentelemetry.proto.common.v1.InstrumentationScope instrumentationScope = 3;
-    string resourceSchemaUrl = 4;
-    string instrumentationScopeSchemaUrl = 5;
+  opentelemetry.proto.metrics.v1.Metric metric = 1;
+  opentelemetry.proto.resource.v1.Resource resource = 2;
+  opentelemetry.proto.common.v1.InstrumentationScope instrumentation_scope = 3;
+  string resource_schema_url = 4;
+  string instrumentation_scope_schema_url = 5;
 }

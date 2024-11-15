@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package odddotnet.proto.resource.v1;
 
-option csharp_namespace = "OddDotNet.Proto.Resource.V1";
-
 import "odddotproto/proto/common/v1/properties.proto";
 
+option csharp_namespace = "OddDotNet.Proto.Resource.V1";
+
 message ResourceFilter {
-    oneof value {
-        odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
-        odddotnet.proto.common.v1.UInt32Property droppedAttributesCount = 2;
-    }
+  oneof value {
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+    odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 2;
+  }
 }
