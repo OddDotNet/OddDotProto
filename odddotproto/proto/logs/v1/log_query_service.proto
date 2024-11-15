@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package odddotnet.proto.logs.v1;
+
+import "odddotproto/proto/logs/v1/log_query_request.proto";
+import "odddotproto/proto/logs/v1/log_query_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Logs.V1";
+
+service SpanQueryService {
+  rpc Query(LogQueryRequest) returns (LogQueryResponse);
+}
