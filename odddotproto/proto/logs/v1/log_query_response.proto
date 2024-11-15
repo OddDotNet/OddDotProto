@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package odddotnet.proto.logs.v1;
+
+import "odddotproto/proto/logs/v1/flat_log.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Logs.V1";
+
+message LogQueryResponse {
+  repeated FlatLog logs = 1;
+}

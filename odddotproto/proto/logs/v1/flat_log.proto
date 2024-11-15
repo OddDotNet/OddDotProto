@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package odddotnet.proto.logs.v1;
+
+import "opentelemetry/proto/common/v1/common.proto";
+import "opentelemetry/proto/resource/v1/resource.proto";
+import "opentelemetry/proto/logs/v1/logs.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Logs.V1";
+
+message FlatLog {
+  opentelemetry.proto.logs.v1.LogRecord log = 1;
+  opentelemetry.proto.resource.v1.Resource resource = 2;
+  opentelemetry.proto.common.v1.InstrumentationScope instrumentation_scope = 3;
+  string resource_schema_url = 4;
+  string instrumentation_scope_schema_url = 5;
+}
