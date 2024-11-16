@@ -60,6 +60,8 @@ message AnyValueProperty {
     Int64Property int64_value = 4;
     DoubleProperty double_value = 5;
     ByteStringProperty byte_string_value = 6;
+    AnyValueProperty array_value = 7;
+    KeyValueProperty key_value = 8;
   }
 }
   
