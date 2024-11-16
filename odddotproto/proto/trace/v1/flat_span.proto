@@ -2,16 +2,20 @@ syntax = "proto3";
 
 package odddotnet.proto.trace.v1;
 
-option csharp_namespace = "OddDotNet.Proto.Trace.V1";
-
-import "opentelemetry/proto/trace/v1/trace.proto";
-import "opentelemetry/proto/resource/v1/resource.proto";
 import "opentelemetry/proto/common/v1/common.proto";
+import "opentelemetry/proto/resource/v1/resource.proto";
+import "opentelemetry/proto/trace/v1/trace.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Trace.V1";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.trace.v1";
+option java_outer_classname = "TraceProto";
+option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
 message FlatSpan {
-    opentelemetry.proto.trace.v1.Span span = 1;
-    opentelemetry.proto.resource.v1.Resource resource = 2;
-    opentelemetry.proto.common.v1.InstrumentationScope instrumentationScope = 3;
-    string resourceSchemaUrl = 4;
-    string instrumentationScopeSchemaUrl = 5;
+  opentelemetry.proto.trace.v1.Span span = 1;
+  opentelemetry.proto.resource.v1.Resource resource = 2;
+  opentelemetry.proto.common.v1.InstrumentationScope instrumentation_scope = 3;
+  string resource_schema_url = 4;
+  string instrumentation_scope_schema_url = 5;
 }

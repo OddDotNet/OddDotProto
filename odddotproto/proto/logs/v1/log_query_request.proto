@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package odddotnet.proto.logs.v1;
+
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/filters.proto";
+import "odddotproto/proto/common/v1/properties.proto";
+import "odddotproto/proto/resource/v1/resource_filters.proto";
+import "opentelemetry/proto/logs/v1/logs.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Logs.V1";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.logs.v1";
+option java_outer_classname = "LogsProto";
+option go_package = "go.odddotnet.io/proto/otlp/logs/v1";
+
+message LogQueryRequest {
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
+}
+
+message Where {
+  oneof value {
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentation_scope = 3;
+    odddotnet.proto.resource.v1.ResourceFilter resource = 4;
+    odddotnet.proto.common.v1.StringProperty instrumentation_scope_schema_url = 5;
+    odddotnet.proto.common.v1.StringProperty resource_schema_url = 6;
+  }
+}
+
+message PropertyFilter {
+  reserved 4;
+  oneof value {
+    odddotnet.proto.common.v1.UInt64Property time_unix_nano = 1;
+    odddotnet.proto.common.v1.UInt64Property observed_time_unix_nano = 11;
+    SeverityNumberProperty severity_number = 2;
+    odddotnet.proto.common.v1.StringProperty severity_text = 3;
+    odddotnet.proto.common.v1.AnyValueProperty body = 5;
+    odddotnet.proto.common.v1.KeyValueProperty attribute = 6;
+    odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 7;
+    odddotnet.proto.common.v1.UInt32Property flags = 8;
+    odddotnet.proto.common.v1.ByteStringProperty trace_id = 9;
+    odddotnet.proto.common.v1.ByteStringProperty span_id = 10;
+  }
+}
+
+message OrFilter {
+  repeated Where filters = 1;
+}
+
+message SeverityNumberProperty {
+  odddotnet.proto.common.v1.EnumCompareAsType compare_as = 1;
+  opentelemetry.proto.logs.v1.SeverityNumber compare = 2;
+}
