@@ -55,13 +55,13 @@ message KeyValueProperty {
   
 message AnyValueProperty {
   oneof value {
-    StringProperty string_value = 2;
-    BoolProperty bool_value = 3;
-    Int64Property int64_value = 4;
-    DoubleProperty double_value = 5;
-    ByteStringProperty byte_string_value = 6;
-    AnyValueProperty array_value = 7;
-    KeyValueProperty key_value = 8;
+    StringProperty string_value = 1;
+    BoolProperty bool_value = 2;
+    Int64Property int64_value = 3;
+    DoubleProperty double_value = 4;
+    AnyValueProperty array_value = 5;
+    KeyValueProperty key_value = 6;
+    ByteStringProperty byte_string_value = 7;
   }
 }
   
