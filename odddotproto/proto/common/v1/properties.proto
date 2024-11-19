@@ -59,10 +59,18 @@ message AnyValueProperty {
     BoolProperty bool_value = 2;
     Int64Property int64_value = 3;
     DoubleProperty double_value = 4;
-    AnyValueProperty array_value = 5;
-    KeyValueProperty key_value = 6;
+    ArrayValueProperty array_value = 5;
+    KeyValueListProperty key_value = 6;
     ByteStringProperty byte_string_value = 7;
   }
+}
+
+message ArrayValueProperty {
+  repeated AnyValueProperty values = 1;
+}
+
+message KeyValueListProperty {
+  repeated KeyValueProperty values = 1;
 }
   
 enum NumberCompareAsType {
