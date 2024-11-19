@@ -12,7 +12,7 @@ option go_package = "go.odddotnet.io/proto/otlp/resource/v1";
 
 message ResourceFilter {
   oneof value {
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 1;
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 2;
   }
 }

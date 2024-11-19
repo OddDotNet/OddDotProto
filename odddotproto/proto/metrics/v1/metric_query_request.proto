@@ -42,7 +42,7 @@ message PropertyFilter {
     HistogramFilter histogram = 9;
     ExponentialHistogramFilter exponential_histogram = 10;
     SummaryFilter summary = 11;
-    odddotnet.proto.common.v1.KeyValueProperty metadata = 12;
+    odddotnet.proto.common.v1.KeyValueListProperty metadata = 12;
   }
 }
 
@@ -83,7 +83,7 @@ message SummaryFilter {
 message HistogramDataPointFilter {
   reserved 1;
   oneof value {
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 9;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 9;
     odddotnet.proto.common.v1.UInt64Property start_time_unix_nano = 2;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
     odddotnet.proto.common.v1.UInt64Property count = 4;
@@ -99,7 +99,7 @@ message HistogramDataPointFilter {
 
 message ExponentialHistogramDataPointFilter {
   oneof value {
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 1;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 1;
     odddotnet.proto.common.v1.UInt64Property start_time_unix_nano = 2;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
     odddotnet.proto.common.v1.UInt64Property count = 4;
@@ -126,7 +126,7 @@ message BucketFilter {
 message NumberDataPointFilter {
   reserved 1;
   oneof value {
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 7;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 7;
     odddotnet.proto.common.v1.UInt64Property start_time_unix_nano = 2;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
     odddotnet.proto.common.v1.DoubleProperty value_as_double = 4;
@@ -139,7 +139,7 @@ message NumberDataPointFilter {
 message SummaryDataPointFilter {
   reserved 1;
   oneof value {
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 7;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 7;
     odddotnet.proto.common.v1.UInt64Property start_time_unix_nano = 2;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
     odddotnet.proto.common.v1.UInt64Property count = 4;
@@ -151,7 +151,7 @@ message SummaryDataPointFilter {
 
 message ExemplarFilter {
   oneof value {
-    odddotnet.proto.common.v1.KeyValueProperty filtered_attribute = 1;
+    odddotnet.proto.common.v1.KeyValueListProperty filtered_attributes = 1;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 2;
     odddotnet.proto.common.v1.DoubleProperty value_as_double = 3;
     odddotnet.proto.common.v1.Int64Property value_as_int = 4;
