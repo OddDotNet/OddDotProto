@@ -57,7 +57,7 @@ message AnyValueProperty {
   oneof value {
     StringProperty string_value = 1;
     BoolProperty bool_value = 2;
-    Int64Property int64_value = 3;
+    Int64Property int_value = 3;
     DoubleProperty double_value = 4;
     ArrayValueProperty array_value = 5;
     KeyValueListProperty kvlist_value = 6;
