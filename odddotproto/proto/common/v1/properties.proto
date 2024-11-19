@@ -60,7 +60,7 @@ message AnyValueProperty {
     Int64Property int64_value = 3;
     DoubleProperty double_value = 4;
     ArrayValueProperty array_value = 5;
-    KeyValueListProperty key_value = 6;
+    KeyValueListProperty kvlist_value = 6;
     ByteStringProperty byte_string_value = 7;
   }
 }
