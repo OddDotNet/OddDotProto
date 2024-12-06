@@ -41,7 +41,7 @@ message PropertyFilter {
     SpanKindProperty kind = 6;
     odddotnet.proto.common.v1.UInt64Property start_time_unix_nano = 7;
     odddotnet.proto.common.v1.UInt64Property end_time_unix_nano = 8;
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 9;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 9;
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 10;
     EventFilter event = 11;
     odddotnet.proto.common.v1.UInt32Property dropped_events_count = 12;
@@ -60,7 +60,7 @@ message EventFilter {
   oneof value {
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 1;
     odddotnet.proto.common.v1.StringProperty name = 2;
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 3;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 3;
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 4;
   }
 }
@@ -70,7 +70,7 @@ message LinkFilter {
     odddotnet.proto.common.v1.ByteStringProperty trace_id = 1;
     odddotnet.proto.common.v1.ByteStringProperty span_id = 2;
     odddotnet.proto.common.v1.StringProperty trace_state = 3;
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 4;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 4;
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 5;
     odddotnet.proto.common.v1.UInt32Property flags = 6;
   }

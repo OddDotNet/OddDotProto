@@ -50,23 +50,27 @@ message DoubleProperty {
   
 message KeyValueProperty {
   string key = 1;
-  oneof value {
-    StringProperty string_value = 2;
-    BoolProperty bool_value = 3;
-    Int64Property int_6_4_value = 4;
-    DoubleProperty double_value = 5;
-    ByteStringProperty byte_string_value = 6;
-  }
+  AnyValueProperty value = 2;
 }
   
 message AnyValueProperty {
   oneof value {
-    StringProperty string_value = 2;
-    BoolProperty bool_value = 3;
-    Int64Property int64_value = 4;
-    DoubleProperty double_value = 5;
-    ByteStringProperty byte_string_value = 6;
+    StringProperty string_value = 1;
+    BoolProperty bool_value = 2;
+    Int64Property int_value = 3;
+    DoubleProperty double_value = 4;
+    ArrayValueProperty array_value = 5;
+    KeyValueListProperty kvlist_value = 6;
+    ByteStringProperty byte_string_value = 7;
   }
+}
+
+message ArrayValueProperty {
+  repeated AnyValueProperty values = 1;
+}
+
+message KeyValueListProperty {
+  repeated KeyValueProperty values = 1;
 }
   
 enum NumberCompareAsType {

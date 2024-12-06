@@ -39,7 +39,7 @@ message PropertyFilter {
     SeverityNumberProperty severity_number = 2;
     odddotnet.proto.common.v1.StringProperty severity_text = 3;
     odddotnet.proto.common.v1.AnyValueProperty body = 5;
-    odddotnet.proto.common.v1.KeyValueProperty attribute = 6;
+    odddotnet.proto.common.v1.KeyValueListProperty attributes = 6;
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 7;
     odddotnet.proto.common.v1.UInt32Property flags = 8;
     odddotnet.proto.common.v1.ByteStringProperty trace_id = 9;
