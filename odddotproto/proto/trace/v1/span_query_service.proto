@@ -10,7 +10,7 @@ import "odddotproto/proto/trace/v1/span_reset_response.proto";
 option csharp_namespace = "OddDotNet.Proto.Trace.V1";
 option java_multiple_files = true;
 option java_package = "io.odddotnet.proto.trace.v1";
-option java_outer_classname = "TraceProto";
+option java_outer_classname = "SpanQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
 service SpanQueryService {

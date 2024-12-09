@@ -5,7 +5,7 @@ package odddotnet.proto.common.v1;
 option csharp_namespace = "OddDotNet.Proto.Common.V1";
 option java_multiple_files = true;
 option java_package = "io.odddotnet.proto.common.v1";
-option java_outer_classname = "CommonProto";
+option java_outer_classname = "PropertiesProto";
 option go_package = "go.odddotnet.io/proto/otlp/common/v1";
 
 message StringProperty {

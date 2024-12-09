@@ -9,7 +9,7 @@ import "opentelemetry/proto/logs/v1/logs.proto";
 option csharp_namespace = "OddDotNet.Proto.Logs.V1";
 option java_multiple_files = true;
 option java_package = "io.odddotnet.proto.logs.v1";
-option java_outer_classname = "LogsProto";
+option java_outer_classname = "FlatLogProto";
 option go_package = "go.odddotnet.io/proto/otlp/logs/v1";
 
 message FlatLog {
