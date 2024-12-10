@@ -11,7 +11,7 @@ import "opentelemetry/proto/metrics/v1/metrics.proto";
 option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
 option java_multiple_files = true;
 option java_package = "io.odddotnet.proto.metrics.v1";
-option java_outer_classname = "MetricsProto";
+option java_outer_classname = "MetricQueryRequestProto";
 option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
 message MetricQueryRequest {
