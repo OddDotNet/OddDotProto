@@ -13,4 +13,5 @@ option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
 service MetricQueryService {
   rpc Query(MetricQueryRequest) returns (MetricQueryResponse);
+  rpc StreamQuery(MetricQueryRequest) returns (stream MetricQueryResponse);
 }

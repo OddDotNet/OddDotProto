@@ -13,4 +13,5 @@ option go_package = "go.odddotnet.io/proto/otlp/logs/v1";
 
 service LogQueryService {
   rpc Query(LogQueryRequest) returns (LogQueryResponse);
+  rpc StreamQuery(LogQueryRequest) returns (stream LogQueryResponse);
 }

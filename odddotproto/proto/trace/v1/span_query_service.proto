@@ -15,5 +15,6 @@ option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
 service SpanQueryService {
   rpc Query(SpanQueryRequest) returns (SpanQueryResponse);
+  rpc StreamQuery(SpanQueryRequest) returns (stream SpanQueryResponse);
   rpc Reset(SpanResetRequest) returns (SpanResetResponse); 
 }
