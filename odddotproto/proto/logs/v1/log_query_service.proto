@@ -4,6 +4,7 @@ package odddotnet.proto.logs.v1;
 
 import "odddotproto/proto/logs/v1/log_query_request.proto";
 import "odddotproto/proto/logs/v1/log_query_response.proto";
+import "odddotproto/proto/logs/v1/flat_log.proto";
 
 option csharp_namespace = "OddDotNet.Proto.Logs.V1";
 option java_multiple_files = true;
@@ -13,4 +14,5 @@ option go_package = "go.odddotnet.io/proto/otlp/logs/v1";
 
 service LogQueryService {
   rpc Query(LogQueryRequest) returns (LogQueryResponse);
+  rpc StreamQuery(LogQueryRequest) returns (stream FlatLog);
 }
