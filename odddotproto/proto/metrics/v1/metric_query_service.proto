@@ -4,6 +4,7 @@ package odddotnet.proto.metrics.v1;
 
 import "odddotproto/proto/metrics/v1/metric_query_request.proto";
 import "odddotproto/proto/metrics/v1/metric_query_response.proto";
+import "odddotproto/proto/metrics/v1/flat_metric.proto";
 
 option csharp_namespace = "OddDotNet.Proto.Metrics.V1";
 option java_multiple_files = true;
@@ -13,5 +14,5 @@ option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
 service MetricQueryService {
   rpc Query(MetricQueryRequest) returns (MetricQueryResponse);
-  rpc StreamQuery(MetricQueryRequest) returns (stream MetricQueryResponse);
+  rpc StreamQuery(MetricQueryRequest) returns (stream FlatMetric);
 }
