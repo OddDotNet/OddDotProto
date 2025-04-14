@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package odddotnet.proto.profiles.v1development;
+
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/filters.proto";
+import "odddotproto/proto/common/v1/properties.proto";
+import "odddotproto/proto/resource/v1/resource_filters.proto";
+import "opentelemetry/proto/profiles/v1development/profiles.proto";
+
+option csharp_namespace = "OddDotNet.Proto.Profiles.V1Development";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.profiles.v1development";
+option java_outer_classname = "ProfileQueryRequestProto";
+option go_package = "go.odddotnet.io/proto/otlp/profiles/v1development";
+
+message ProfileQueryRequest {
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
+}
+
+message Where {
+  
+}
+
+message PropertyFilter {
+  oneof value {
+    ValueTypeFilter sample_type = 1;
+    SampleFilter sample = 2;
+    MappingFilter mapping_table = 3;
+  }
+}
+
+message ValueTypeFilter {
+  oneof value {
+    odddotnet.proto.common.v1.Int32Property type_strindex = 1;
+    odddotnet.proto.common.v1.Int32Property unit_strindex = 2;
+    AggregationTemporalityProperty aggregation_temporality = 3;
+  }
+}
+
+message SampleFilter {
+  oneof property {
+    odddotnet.proto.common.v1.Int32Property locations_start_index = 1;
+    odddotnet.proto.common.v1.Int32Property locations_length = 2;
+    odddotnet.proto.common.v1.Int64Property value = 3;
+    odddotnet.proto.common.v1.Int32Property attribute_indices = 4;
+    odddotnet.proto.common.v1.Int32Property link_index = 5;
+    odddotnet.proto.common.v1.UInt64Property timestamps_unix_nano = 6;
+  }
+}
+
+message MappingFilter {
+  oneof value {
+    odddotnet.proto.common.v1.UInt64Property memory_start = 1;
+    odddotnet.proto.common.v1.UInt64Property memory_limit = 2;
+    odddotnet.proto.common.v1.UInt64Property file_offset = 3;
+    odddotnet.proto.common.v1.Int32Property filename_strindex = 4;
+    odddotnet.proto.common.v1.Int32Property attribute_indices = 5;
+    odddotnet.proto.common.v1.BoolProperty has_functions = 6;
+    odddotnet.proto.common.v1.BoolProperty has_filenames = 7;
+    odddotnet.proto.common.v1.BoolProperty has_line_numbers = 8;
+    odddotnet.proto.common.v1.BoolProperty has_inline_frames = 9;
+  }
+}
+
+message AggregationTemporalityProperty {
+  odddotnet.proto.common.v1.EnumCompareAsType compare_as = 1;
+  opentelemetry.proto.profiles.v1development.AggregationTemporality compare = 2;
+}
