@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.exception;
+
+import "odddotproto/proto/appinsights/v1/envelope_filters.proto";
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/properties.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Exception";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.exception";
+option java_outer_classname = "ExceptionQueryRequestProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/exception";
+
+message ExceptionQueryRequest {
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
+}
+
+message Where {
+  oneof value {
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.appinsights.v1.EnvelopeFilter envelope = 3;
+  }
+}
+
+message PropertyFilter {
+  oneof value {
+    odddotnet.proto.common.v1.StringProperty id = 1;
+    odddotnet.proto.common.v1.StringProperty problem_id = 2;
+    odddotnet.proto.appinsights.v1.SeverityLevelProperty severity_level = 3;
+    ExceptionDetailsFilter exception_details = 4;
+    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 5;
+    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 6;
+  }
+}
+
+message ExceptionDetailsFilter {
+  oneof value {
+    odddotnet.proto.common.v1.StringProperty type_name = 1;
+    odddotnet.proto.common.v1.StringProperty message = 2;
+    odddotnet.proto.common.v1.StringProperty stack = 3;
+    odddotnet.proto.common.v1.Int32Property outer_id = 4;
+  }
+}
+
+message OrFilter {
+  repeated Where filters = 1;
+}

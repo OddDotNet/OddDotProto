@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.request;
+
+import "odddotproto/proto/appinsights/v1/request/flat_request.proto";
+import "odddotproto/proto/appinsights/v1/request/request_query_request.proto";
+import "odddotproto/proto/appinsights/v1/request/request_query_response.proto";
+import "odddotproto/proto/appinsights/v1/request/request_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/request/request_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Request";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.request";
+option java_outer_classname = "RequestQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/request";
+
+service RequestQueryService {
+  rpc Query(RequestQueryRequest) returns (RequestQueryResponse);
+  rpc StreamQuery(RequestQueryRequest) returns (stream FlatRequest);
+  rpc Reset(RequestResetRequest) returns (RequestResetResponse);
+}

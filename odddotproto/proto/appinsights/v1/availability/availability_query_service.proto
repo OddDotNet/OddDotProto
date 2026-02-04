@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.availability;
+
+import "odddotproto/proto/appinsights/v1/availability/flat_availability.proto";
+import "odddotproto/proto/appinsights/v1/availability/availability_query_request.proto";
+import "odddotproto/proto/appinsights/v1/availability/availability_query_response.proto";
+import "odddotproto/proto/appinsights/v1/availability/availability_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/availability/availability_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Availability";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.availability";
+option java_outer_classname = "AvailabilityQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/availability";
+
+service AvailabilityQueryService {
+  rpc Query(AvailabilityQueryRequest) returns (AvailabilityQueryResponse);
+  rpc StreamQuery(AvailabilityQueryRequest) returns (stream FlatAvailability);
+  rpc Reset(AvailabilityResetRequest) returns (AvailabilityResetResponse);
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.trace;
+
+import "odddotproto/proto/appinsights/v1/trace/flat_trace.proto";
+import "odddotproto/proto/appinsights/v1/trace/trace_query_request.proto";
+import "odddotproto/proto/appinsights/v1/trace/trace_query_response.proto";
+import "odddotproto/proto/appinsights/v1/trace/trace_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/trace/trace_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Trace";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.trace";
+option java_outer_classname = "TraceQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/trace";
+
+service TraceQueryService {
+  rpc Query(TraceQueryRequest) returns (TraceQueryResponse);
+  rpc StreamQuery(TraceQueryRequest) returns (stream FlatTrace);
+  rpc Reset(TraceResetRequest) returns (TraceResetResponse);
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.dependency;
+
+import "odddotproto/proto/appinsights/v1/dependency/flat_dependency.proto";
+import "odddotproto/proto/appinsights/v1/dependency/dependency_query_request.proto";
+import "odddotproto/proto/appinsights/v1/dependency/dependency_query_response.proto";
+import "odddotproto/proto/appinsights/v1/dependency/dependency_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/dependency/dependency_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Dependency";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
+option java_outer_classname = "DependencyQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
+
+service DependencyQueryService {
+  rpc Query(DependencyQueryRequest) returns (DependencyQueryResponse);
+  rpc StreamQuery(DependencyQueryRequest) returns (stream FlatDependency);
+  rpc Reset(DependencyResetRequest) returns (DependencyResetResponse);
+}

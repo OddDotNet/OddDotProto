@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.pageview;
+
+import "odddotproto/proto/appinsights/v1/pageview/flat_pageview.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.PageView";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
+option java_outer_classname = "PageViewQueryResponseProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
+
+message PageViewQueryResponse {
+  repeated FlatPageView page_views = 1;
+}

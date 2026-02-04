@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.pageview;
+
+import "odddotproto/proto/appinsights/v1/pageview/flat_pageview.proto";
+import "odddotproto/proto/appinsights/v1/pageview/pageview_query_request.proto";
+import "odddotproto/proto/appinsights/v1/pageview/pageview_query_response.proto";
+import "odddotproto/proto/appinsights/v1/pageview/pageview_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/pageview/pageview_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.PageView";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
+option java_outer_classname = "PageViewQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
+
+service PageViewQueryService {
+  rpc Query(PageViewQueryRequest) returns (PageViewQueryResponse);
+  rpc StreamQuery(PageViewQueryRequest) returns (stream FlatPageView);
+  rpc Reset(PageViewResetRequest) returns (PageViewResetResponse);
+}

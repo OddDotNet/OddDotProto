@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.metric;
+
+import "odddotproto/proto/appinsights/v1/metric/flat_metric.proto";
+import "odddotproto/proto/appinsights/v1/metric/metric_query_request.proto";
+import "odddotproto/proto/appinsights/v1/metric/metric_query_response.proto";
+import "odddotproto/proto/appinsights/v1/metric/metric_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/metric/metric_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Metric";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.metric";
+option java_outer_classname = "MetricQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/metric";
+
+service MetricQueryService {
+  rpc Query(MetricQueryRequest) returns (MetricQueryResponse);
+  rpc StreamQuery(MetricQueryRequest) returns (stream FlatMetric);
+  rpc Reset(MetricResetRequest) returns (MetricResetResponse);
+}

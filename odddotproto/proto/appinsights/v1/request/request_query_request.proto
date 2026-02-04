@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.request;
+
+import "odddotproto/proto/appinsights/v1/envelope_filters.proto";
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/properties.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Request";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.request";
+option java_outer_classname = "RequestQueryRequestProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/request";
+
+message RequestQueryRequest {
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
+}
+
+message Where {
+  oneof value {
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.appinsights.v1.EnvelopeFilter envelope = 3;
+  }
+}
+
+message PropertyFilter {
+  oneof value {
+    odddotnet.proto.common.v1.StringProperty id = 1;
+    odddotnet.proto.common.v1.StringProperty name = 2;
+    odddotnet.proto.common.v1.StringProperty duration = 3;
+    odddotnet.proto.common.v1.StringProperty response_code = 4;
+    odddotnet.proto.common.v1.BoolProperty success = 5;
+    odddotnet.proto.common.v1.StringProperty url = 6;
+    odddotnet.proto.common.v1.StringProperty source = 7;
+    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 8;
+    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 9;
+  }
+}
+
+message OrFilter {
+  repeated Where filters = 1;
+}
