@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.request;
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Request";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.request";
+option java_outer_classname = "RequestResetResponseProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/request";
+
+message RequestResetResponse {
+}

@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.event;
+
+import "odddotproto/proto/appinsights/v1/envelope_filters.proto";
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/properties.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Event";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.event";
+option java_outer_classname = "EventQueryRequestProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/event";
+
+message EventQueryRequest {
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
+}
+
+message Where {
+  oneof value {
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.appinsights.v1.EnvelopeFilter envelope = 3;
+  }
+}
+
+message PropertyFilter {
+  oneof value {
+    odddotnet.proto.common.v1.StringProperty name = 1;
+    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 2;
+    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 3;
+  }
+}
+
+message OrFilter {
+  repeated Where filters = 1;
+}

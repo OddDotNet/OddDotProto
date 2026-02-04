@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.dependency;
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Dependency";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
+option java_outer_classname = "DependencyResetResponseProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
+
+message DependencyResetResponse {
+}

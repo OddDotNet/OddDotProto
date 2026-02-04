@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.event;
+
+import "odddotproto/proto/appinsights/v1/common.proto";
+import "odddotproto/proto/appinsights/v1/telemetry_types.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Event";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.event";
+option java_outer_classname = "FlatEventProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/event";
+
+message FlatEvent {
+  odddotnet.proto.appinsights.v1.EventTelemetry event = 1;
+  odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
+}

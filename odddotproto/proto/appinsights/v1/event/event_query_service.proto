@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.event;
+
+import "odddotproto/proto/appinsights/v1/event/flat_event.proto";
+import "odddotproto/proto/appinsights/v1/event/event_query_request.proto";
+import "odddotproto/proto/appinsights/v1/event/event_query_response.proto";
+import "odddotproto/proto/appinsights/v1/event/event_reset_request.proto";
+import "odddotproto/proto/appinsights/v1/event/event_reset_response.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Event";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.event";
+option java_outer_classname = "EventQueryServiceProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/event";
+
+service EventQueryService {
+  rpc Query(EventQueryRequest) returns (EventQueryResponse);
+  rpc StreamQuery(EventQueryRequest) returns (stream FlatEvent);
+  rpc Reset(EventResetRequest) returns (EventResetResponse);
+}

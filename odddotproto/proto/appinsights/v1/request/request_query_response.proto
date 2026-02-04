@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.request;
+
+import "odddotproto/proto/appinsights/v1/request/flat_request.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Request";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.request";
+option java_outer_classname = "RequestQueryResponseProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/request";
+
+message RequestQueryResponse {
+  repeated FlatRequest requests = 1;
+}

@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.metric;
+
+import "odddotproto/proto/appinsights/v1/envelope_filters.proto";
+import "odddotproto/proto/common/v1/common.proto";
+import "odddotproto/proto/common/v1/properties.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Metric";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.metric";
+option java_outer_classname = "MetricQueryRequestProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/metric";
+
+message MetricQueryRequest {
+  repeated Where filters = 1;
+  odddotnet.proto.common.v1.Take take = 2;
+  optional odddotnet.proto.common.v1.Duration duration = 3;
+}
+
+message Where {
+  oneof value {
+    PropertyFilter property = 1;
+    OrFilter or = 2;
+    odddotnet.proto.appinsights.v1.EnvelopeFilter envelope = 3;
+  }
+}
+
+message PropertyFilter {
+  oneof value {
+    odddotnet.proto.common.v1.StringProperty name = 1;
+    odddotnet.proto.common.v1.StringProperty metric_namespace = 2;
+    odddotnet.proto.common.v1.DoubleProperty metric_value = 3;
+    odddotnet.proto.common.v1.Int32Property count = 4;
+    odddotnet.proto.common.v1.DoubleProperty min = 5;
+    odddotnet.proto.common.v1.DoubleProperty max = 6;
+    odddotnet.proto.common.v1.DoubleProperty std_dev = 7;
+    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 8;
+  }
+}
+
+message OrFilter {
+  repeated Where filters = 1;
+}

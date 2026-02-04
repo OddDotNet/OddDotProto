@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.dependency;
+
+import "odddotproto/proto/appinsights/v1/common.proto";
+import "odddotproto/proto/appinsights/v1/telemetry_types.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Dependency";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
+option java_outer_classname = "FlatDependencyProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
+
+message FlatDependency {
+  odddotnet.proto.appinsights.v1.DependencyTelemetry dependency = 1;
+  odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
+}

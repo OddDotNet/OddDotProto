@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package odddotnet.proto.appinsights.v1.event;
+
+import "odddotproto/proto/appinsights/v1/event/flat_event.proto";
+
+option csharp_namespace = "OddDotNet.Proto.AppInsights.V1.Event";
+option java_multiple_files = true;
+option java_package = "io.odddotnet.proto.appinsights.v1.event";
+option java_outer_classname = "EventQueryResponseProto";
+option go_package = "go.odddotnet.io/proto/appinsights/v1/event";
+
+message EventQueryResponse {
+  repeated FlatEvent events = 1;
+}
