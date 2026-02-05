@@ -29,8 +29,8 @@ message Where {
 message PropertyFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty name = 1;
-    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 2;
-    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 3;
+    odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 2;
+    odddotnet.proto.appinsights.v1.MeasurementMapProperty measurements = 3;
   }
 }
 

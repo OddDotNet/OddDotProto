@@ -32,8 +32,8 @@ message PropertyFilter {
     odddotnet.proto.common.v1.StringProperty problem_id = 2;
     odddotnet.proto.appinsights.v1.SeverityLevelProperty severity_level = 3;
     ExceptionDetailsFilter exception_details = 4;
-    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 5;
-    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 6;
+    odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 5;
+    odddotnet.proto.appinsights.v1.MeasurementMapProperty measurements = 6;
   }
 }
 

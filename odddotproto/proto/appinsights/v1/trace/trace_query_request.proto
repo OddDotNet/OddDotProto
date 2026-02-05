@@ -30,7 +30,7 @@ message PropertyFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty message = 1;
     odddotnet.proto.appinsights.v1.SeverityLevelProperty severity_level = 2;
-    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 3;
+    odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 3;
   }
 }
 
