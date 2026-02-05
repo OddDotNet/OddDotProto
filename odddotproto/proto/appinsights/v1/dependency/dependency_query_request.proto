@@ -36,8 +36,8 @@ message PropertyFilter {
     odddotnet.proto.common.v1.StringProperty data = 6;
     odddotnet.proto.common.v1.StringProperty target = 7;
     odddotnet.proto.common.v1.StringProperty type = 8;
-    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 9;
-    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 10;
+    odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 9;
+    odddotnet.proto.appinsights.v1.MeasurementMapProperty measurements = 10;
   }
 }
 

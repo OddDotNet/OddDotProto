@@ -100,12 +100,12 @@ message InternalContextFilter {
 }
 
 // Custom property/measurement filters
-message PropertyMapFilter {
+message PropertyMapProperty {
   string key = 1;
   odddotnet.proto.common.v1.StringProperty value = 2;
 }
 
-message MeasurementMapFilter {
+message MeasurementMapProperty {
   string key = 1;
   odddotnet.proto.common.v1.DoubleProperty value = 2;
 }

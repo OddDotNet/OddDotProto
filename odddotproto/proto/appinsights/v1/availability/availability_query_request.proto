@@ -34,8 +34,8 @@ message PropertyFilter {
     odddotnet.proto.common.v1.BoolProperty success = 4;
     odddotnet.proto.common.v1.StringProperty run_location = 5;
     odddotnet.proto.common.v1.StringProperty message = 6;
-    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 7;
-    odddotnet.proto.appinsights.v1.MeasurementMapFilter measurements = 8;
+    odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 7;
+    odddotnet.proto.appinsights.v1.MeasurementMapProperty measurements = 8;
   }
 }
 

@@ -35,7 +35,7 @@ message PropertyFilter {
     odddotnet.proto.common.v1.DoubleProperty min = 5;
     odddotnet.proto.common.v1.DoubleProperty max = 6;
     odddotnet.proto.common.v1.DoubleProperty std_dev = 7;
-    odddotnet.proto.appinsights.v1.PropertyMapFilter properties = 8;
+    odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 8;
   }
 }
 
