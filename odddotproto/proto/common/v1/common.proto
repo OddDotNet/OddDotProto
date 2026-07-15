@@ -8,24 +8,58 @@ option java_package = "io.odddotnet.proto.common.v1";
 option java_outer_classname = "CommonProto";
 option go_package = "go.odddotnet.io/proto/otlp/common/v1";
 
+// Take controls how many matching signals a query collects before it stops
+// waiting and returns.
+//
+// Every query blocks until either its Take target is met or its Duration
+// elapses, whichever happens first. Signals already buffered by the sink are
+// evaluated immediately when the query starts, then the query waits for
+// newly-arriving signals until the target is met or the Duration runs out.
+//
+// When no Take is set the sink defaults to TakeFirst.
 message Take {
   oneof value {
+    // Stop and return as soon as the first matching signal is found.
     TakeFirst take_first = 1;
+
+    // Collect every matching signal seen over the whole Duration. TakeAll has
+    // no target count, so it never returns early: the query always blocks for
+    // the full Duration, even when matches are already buffered. To wait for a
+    // specific signal and return the instant it arrives, use TakeFirst (or
+    // TakeExact) with a filter instead.
     TakeAll take_all = 2;
+
+    // Stop and return as soon as `count` matching signals are found.
     TakeExact take_exact = 3;
   }
 }
 
+// TakeFirst returns as soon as one matching signal is found, or when the
+// Duration elapses if none is found.
 message TakeFirst {
 }
 
+// TakeAll waits the entire Duration and returns every matching signal observed
+// during it. It has no target count, so it never short-circuits — the query
+// always blocks for the full Duration, even if matching signals are already
+// present.
 message TakeAll {
 }
 
+// TakeExact returns as soon as `count` matching signals are found, or when the
+// Duration elapses with fewer than `count` found.
 message TakeExact {
+  // Number of matching signals to collect before returning early.
   int32 count = 1;
 }
 
+// Duration is the maximum time, in milliseconds, a query waits for its Take
+// target to be met.
+//
+// A value of zero or less — or an unset Duration — selects the sink default of
+// 30000 ms (30 seconds); it does NOT mean "return immediately." Because TakeAll
+// never returns early, a TakeAll query always blocks for this full Duration.
 message Duration {
+  // Maximum wait in milliseconds. Zero or negative selects the 30000 ms default.
   int32 milliseconds = 1;
 }

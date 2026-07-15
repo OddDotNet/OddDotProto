@@ -14,9 +14,17 @@ option java_package = "io.odddotnet.proto.trace.v1";
 option java_outer_classname = "SpanQueryRequestProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
+// SpanQueryRequest asks the sink for spans matching filters, bounded by take
+// and duration.
 message SpanQueryRequest {
+  // Filters a span must satisfy to match. A span must pass every filter
+  // (logical AND); an empty list matches all spans.
   repeated Where filters = 1;
+
+  // How many matching spans end the wait early. Defaults to TakeFirst. See Take.
   odddotnet.proto.common.v1.Take take = 2;
+
+  // Maximum time to wait for matching spans. Defaults to 30s. See Duration.
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 

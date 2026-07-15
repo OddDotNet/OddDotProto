@@ -14,9 +14,17 @@ option java_package = "io.odddotnet.proto.metrics.v1";
 option java_outer_classname = "MetricQueryRequestProto";
 option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
+// MetricQueryRequest asks the sink for metrics matching filters, bounded by
+// take and duration.
 message MetricQueryRequest {
+  // Filters a metric must satisfy to match. A metric must pass every filter
+  // (logical AND); an empty list matches all metrics.
   repeated Where filters = 1;
+
+  // How many matching metrics end the wait early. Defaults to TakeFirst. See Take.
   odddotnet.proto.common.v1.Take take = 2;
+
+  // Maximum time to wait for matching metrics. Defaults to 30s. See Duration.
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 

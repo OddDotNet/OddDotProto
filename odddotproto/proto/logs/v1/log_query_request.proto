@@ -14,9 +14,17 @@ option java_package = "io.odddotnet.proto.logs.v1";
 option java_outer_classname = "LogQueryRequestProto";
 option go_package = "go.odddotnet.io/proto/otlp/logs/v1";
 
+// LogQueryRequest asks the sink for logs matching filters, bounded by take and
+// duration.
 message LogQueryRequest {
+  // Filters a log must satisfy to match. A log must pass every filter
+  // (logical AND); an empty list matches all logs.
   repeated Where filters = 1;
+
+  // How many matching logs end the wait early. Defaults to TakeFirst. See Take.
   odddotnet.proto.common.v1.Take take = 2;
+
+  // Maximum time to wait for matching logs. Defaults to 30s. See Duration.
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
