@@ -8,5 +8,7 @@ option java_package = "io.odddotnet.proto.trace.v1";
 option java_outer_classname = "SpanResetResponseProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
+// SpanResetResponse is the empty acknowledgement that a SpanResetRequest
+// completed.
 message SpanResetResponse{
 }

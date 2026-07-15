@@ -8,5 +8,8 @@ option java_package = "io.odddotnet.proto.trace.v1";
 option java_outer_classname = "SpanResetRequestProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
+// SpanResetRequest asks the sink to discard every buffered span. It takes no
+// arguments; the reset is unconditional. Useful between test cases to start
+// each one from an empty sink.
 message SpanResetRequest{
 }

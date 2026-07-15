@@ -28,17 +28,28 @@ message SpanQueryRequest {
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
+// Where is one filter clause. Set exactly one field to choose what it matches;
+// an unset Where matches nothing. A query ANDs its Where clauses together (see
+// SpanQueryRequest.filters).
 message Where {
   oneof value {
+    // Match a field of the span itself.
     PropertyFilter property = 1;
+    // Match when ANY of the nested clauses matches (logical OR).
     OrFilter or = 2;
+    // Match the span's instrumentation scope.
     odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentation_scope = 3;
+    // Match the span's resource.
     odddotnet.proto.resource.v1.ResourceFilter resource = 4;
+    // Match the instrumentation scope's schema URL.
     odddotnet.proto.common.v1.StringProperty instrumentation_scope_schema_url = 5;
+    // Match the resource's schema URL.
     odddotnet.proto.common.v1.StringProperty resource_schema_url = 6;
   }
 }
 
+// PropertyFilter matches a single field of the span. Set exactly one field; an
+// unset PropertyFilter matches nothing. Fields mirror the OpenTelemetry Span.
 message PropertyFilter {
   oneof value {
     odddotnet.proto.common.v1.ByteStringProperty trace_id = 1;
@@ -51,8 +62,10 @@ message PropertyFilter {
     odddotnet.proto.common.v1.UInt64Property end_time_unix_nano = 8;
     odddotnet.proto.common.v1.KeyValueListProperty attributes = 9;
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 10;
+    // Match when ANY of the span's events satisfies the EventFilter.
     EventFilter event = 11;
     odddotnet.proto.common.v1.UInt32Property dropped_events_count = 12;
+    // Match when ANY of the span's links satisfies the LinkFilter.
     LinkFilter link = 13;
     odddotnet.proto.common.v1.UInt32Property dropped_links_count = 14;
     StatusFilter status = 15;
@@ -60,10 +73,14 @@ message PropertyFilter {
   }
 }
 
+// OrFilter matches when ANY of its nested Where clauses matches (logical OR),
+// letting you express disjunctions inside the otherwise-AND filter list.
 message OrFilter {
   repeated Where filters = 1;
 }
 
+// EventFilter matches a span event. Set exactly one field; an unset EventFilter
+// matches nothing.
 message EventFilter {
   oneof value {
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 1;
@@ -73,6 +90,8 @@ message EventFilter {
   }
 }
 
+// LinkFilter matches a span link. Set exactly one field; an unset LinkFilter
+// matches nothing.
 message LinkFilter {
   oneof value {
     odddotnet.proto.common.v1.ByteStringProperty trace_id = 1;
@@ -84,20 +103,28 @@ message LinkFilter {
   }
 }
 
+// StatusFilter matches a span's status. Set exactly one field; an unset
+// StatusFilter matches nothing.
 message StatusFilter {
   reserved 1;
 
   oneof value {
+    // Match the status message string.
     odddotnet.proto.common.v1.StringProperty message = 2;
+    // Match the status code (Ok / Error / Unset).
     SpanStatusCodeProperty code = 3;
   }
 }
 
+// SpanStatusCodeProperty compares a span's status code against an OTLP
+// Status.StatusCode via EQUALS / NOT_EQUALS. See EnumCompareAsType.
 message SpanStatusCodeProperty {
   odddotnet.proto.common.v1.EnumCompareAsType compare_as = 1;
   opentelemetry.proto.trace.v1.Status.StatusCode compare = 2;
 }
 
+// SpanKindProperty compares a span's kind against an OTLP Span.SpanKind via
+// EQUALS / NOT_EQUALS. See EnumCompareAsType.
 message SpanKindProperty {
   odddotnet.proto.common.v1.EnumCompareAsType compare_as = 1;
   opentelemetry.proto.trace.v1.Span.SpanKind compare = 2;

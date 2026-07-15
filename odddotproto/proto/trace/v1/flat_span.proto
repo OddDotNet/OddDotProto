@@ -12,10 +12,24 @@ option java_package = "io.odddotnet.proto.trace.v1";
 option java_outer_classname = "FlatSpanProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
+// FlatSpan is one span paired with the resource and instrumentation scope it
+// arrived under — the unit every span query returns.
+//
+// OTLP nests spans (ResourceSpans -> ScopeSpans -> Span) so context is not
+// repeated on the wire; the sink flattens that hierarchy back onto each span so
+// a single result carries everything needed to interpret it. The `span`,
+// `resource`, and `instrumentation_scope` fields are the upstream OpenTelemetry
+// messages — see the opentelemetry-proto docs for their contents; only the
+// flattening and the two schema-url fields are added here.
 message FlatSpan {
+  // The matched span (upstream OTLP Span).
   opentelemetry.proto.trace.v1.Span span = 1;
+  // Resource the span was reported under (upstream OTLP Resource).
   opentelemetry.proto.resource.v1.Resource resource = 2;
+  // Instrumentation scope the span was reported under (upstream OTLP).
   opentelemetry.proto.common.v1.InstrumentationScope instrumentation_scope = 3;
+  // Schema URL associated with the resource.
   string resource_schema_url = 4;
+  // Schema URL associated with the instrumentation scope.
   string instrumentation_scope_schema_url = 5;
 }

@@ -14,8 +14,14 @@ option java_package = "io.odddotnet.proto.trace.v1";
 option java_outer_classname = "SpanQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
+// SpanQueryService queries the spans the sink has received.
 service SpanQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at
+  // once. See SpanQueryRequest.
   rpc Query(SpanQueryRequest) returns (SpanQueryResponse);
+  // StreamQuery runs the same query but streams each FlatSpan as it matches,
+  // over the same Take/Duration window.
   rpc StreamQuery(SpanQueryRequest) returns (stream FlatSpan);
-  rpc Reset(SpanResetRequest) returns (SpanResetResponse); 
+  // Reset clears the sink's buffered spans. See SpanResetRequest.
+  rpc Reset(SpanResetRequest) returns (SpanResetResponse);
 }

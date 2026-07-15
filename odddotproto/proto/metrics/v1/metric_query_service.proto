@@ -12,7 +12,12 @@ option java_package = "io.odddotnet.proto.metrics.v1";
 option java_outer_classname = "MetricQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
+// MetricQueryService queries the metrics the sink has received.
 service MetricQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at
+  // once. See MetricQueryRequest.
   rpc Query(MetricQueryRequest) returns (MetricQueryResponse);
+  // StreamQuery runs the same query but streams each FlatMetric as it matches,
+  // over the same Take/Duration window.
   rpc StreamQuery(MetricQueryRequest) returns (stream FlatMetric);
 }

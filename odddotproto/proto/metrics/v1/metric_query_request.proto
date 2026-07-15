@@ -28,17 +28,33 @@ message MetricQueryRequest {
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
+// Where is one filter clause. Set exactly one field to choose what it matches;
+// an unset Where matches nothing. A query ANDs its Where clauses together (see
+// MetricQueryRequest.filters).
 message Where {
   oneof value {
+    // Match a field of the metric itself.
     PropertyFilter property = 1;
+    // Match when ANY of the nested clauses matches (logical OR).
     OrFilter or = 2;
+    // Match the metric's instrumentation scope.
     odddotnet.proto.common.v1.InstrumentationScopeFilter instrumentation_scope = 3;
+    // Match the metric's resource.
     odddotnet.proto.resource.v1.ResourceFilter resource = 4;
+    // Match the instrumentation scope's schema URL.
     odddotnet.proto.common.v1.StringProperty instrumentation_scope_schema_url = 5;
+    // Match the resource's schema URL.
     odddotnet.proto.common.v1.StringProperty resource_schema_url = 6;
   }
 }
 
+// PropertyFilter matches a single field of the metric. Set exactly one field;
+// an unset PropertyFilter matches nothing. Fields mirror the OpenTelemetry
+// Metric.
+//
+// The gauge/sum/histogram/exponential_histogram/summary fields select on the
+// metric's data type: each matches ONLY metrics carrying that data type (a
+// gauge filter never matches a sum metric, and vice versa).
 message PropertyFilter {
   reserved 4, 6, 8;
   oneof value {
@@ -54,40 +70,57 @@ message PropertyFilter {
   }
 }
 
+// GaugeFilter matches a gauge metric. Set exactly one field; an unset
+// GaugeFilter matches nothing.
 message GaugeFilter {
   oneof value {
+    // Match when ANY of the gauge's data points satisfies the filter.
     NumberDataPointFilter data_point = 1;
   }
 }
 
+// SumFilter matches a sum metric. Set exactly one field; an unset SumFilter
+// matches nothing.
 message SumFilter {
   oneof value {
+    // Match when ANY of the sum's data points satisfies the filter.
     NumberDataPointFilter data_point = 1;
     AggregationTemporalityProperty aggregation_temporality = 2;
     odddotnet.proto.common.v1.BoolProperty is_monotonic = 3;
   }
 }
 
+// HistogramFilter matches a histogram metric. Set exactly one field; an unset
+// HistogramFilter matches nothing.
 message HistogramFilter {
   oneof value {
+    // Match when ANY of the histogram's data points satisfies the filter.
     HistogramDataPointFilter data_point = 1;
     AggregationTemporalityProperty aggregation_temporality = 2;
   }
 }
 
+// ExponentialHistogramFilter matches an exponential-histogram metric. Set
+// exactly one field; an unset filter matches nothing.
 message ExponentialHistogramFilter {
   oneof value {
+    // Match when ANY of the data points satisfies the filter.
     ExponentialHistogramDataPointFilter data_point = 1;
     AggregationTemporalityProperty aggregation_temporality = 2;
   }
 }
 
+// SummaryFilter matches a summary metric. Set exactly one field; an unset
+// SummaryFilter matches nothing.
 message SummaryFilter {
   oneof value {
+    // Match when ANY of the summary's data points satisfies the filter.
     SummaryDataPointFilter data_point = 1;
   }
 }
 
+// HistogramDataPointFilter matches one histogram data point. Set exactly one
+// field; an unset filter matches nothing.
 message HistogramDataPointFilter {
   reserved 1;
   oneof value {
@@ -96,8 +129,11 @@ message HistogramDataPointFilter {
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
     odddotnet.proto.common.v1.UInt64Property count = 4;
     odddotnet.proto.common.v1.DoubleProperty sum = 5;
+    // Match when ANY of the point's per-bucket counts satisfies the filter.
     odddotnet.proto.common.v1.UInt64Property bucket_count = 6;
+    // Match when ANY of the point's explicit bounds satisfies the filter.
     odddotnet.proto.common.v1.DoubleProperty explicit_bound = 7;
+    // Match when ANY of the point's exemplars satisfies the filter.
     ExemplarFilter exemplar = 8;
     odddotnet.proto.common.v1.UInt32Property flags = 10;
     odddotnet.proto.common.v1.DoubleProperty min = 11;
@@ -105,6 +141,8 @@ message HistogramDataPointFilter {
   }
 }
 
+// ExponentialHistogramDataPointFilter matches one exponential-histogram data
+// point. Set exactly one field; an unset filter matches nothing.
 message ExponentialHistogramDataPointFilter {
   oneof value {
     odddotnet.proto.common.v1.KeyValueListProperty attributes = 1;
@@ -114,9 +152,12 @@ message ExponentialHistogramDataPointFilter {
     odddotnet.proto.common.v1.DoubleProperty sum = 5;
     odddotnet.proto.common.v1.Int32Property scale = 6;
     odddotnet.proto.common.v1.UInt64Property zero_count = 7;
+    // Match when ANY bucket in the point's positive range satisfies the filter.
     BucketFilter positive = 8;
+    // Match when ANY bucket in the point's negative range satisfies the filter.
     BucketFilter negative = 9;
     odddotnet.proto.common.v1.UInt32Property flags = 10;
+    // Match when ANY of the point's exemplars satisfies the filter.
     ExemplarFilter exemplar = 11;
     odddotnet.proto.common.v1.DoubleProperty min = 12;
     odddotnet.proto.common.v1.DoubleProperty max = 13;
@@ -124,26 +165,36 @@ message ExponentialHistogramDataPointFilter {
   }
 }
 
+// BucketFilter matches the positive or negative buckets of an exponential
+// histogram data point. Set exactly one field; an unset filter matches nothing.
 message BucketFilter {
   oneof value {
     odddotnet.proto.common.v1.Int32Property offset = 1;
+    // Match when ANY of the bucket counts satisfies the filter.
     odddotnet.proto.common.v1.UInt64Property bucket_count = 2;
   }
 }
 
+// NumberDataPointFilter matches one gauge or sum data point. Set exactly one
+// field; an unset filter matches nothing.
 message NumberDataPointFilter {
   reserved 1;
   oneof value {
     odddotnet.proto.common.v1.KeyValueListProperty attributes = 7;
     odddotnet.proto.common.v1.UInt64Property start_time_unix_nano = 2;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
+    // Match the point's value when it is a double.
     odddotnet.proto.common.v1.DoubleProperty value_as_double = 4;
+    // Match the point's value when it is an int.
     odddotnet.proto.common.v1.Int64Property value_as_int = 6;
+    // Match when ANY of the point's exemplars satisfies the filter.
     ExemplarFilter exemplar = 5;
     odddotnet.proto.common.v1.UInt32Property flags = 8;
   }
 }
 
+// SummaryDataPointFilter matches one summary data point. Set exactly one field;
+// an unset filter matches nothing.
 message SummaryDataPointFilter {
   reserved 1;
   oneof value {
@@ -152,35 +203,48 @@ message SummaryDataPointFilter {
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 3;
     odddotnet.proto.common.v1.UInt64Property count = 4;
     odddotnet.proto.common.v1.DoubleProperty sum = 5;
+    // Match when ANY of the point's quantile values satisfies the filter.
     ValueAtQuantileFilter quantile_value = 6;
     odddotnet.proto.common.v1.UInt32Property flags = 8;
   }
 }
 
+// ExemplarFilter matches one exemplar attached to a data point. Set exactly one
+// field; an unset filter matches nothing.
 message ExemplarFilter {
   oneof value {
     odddotnet.proto.common.v1.KeyValueListProperty filtered_attributes = 1;
     odddotnet.proto.common.v1.UInt64Property time_unix_nano = 2;
+    // Match the exemplar's value when it is a double.
     odddotnet.proto.common.v1.DoubleProperty value_as_double = 3;
+    // Match the exemplar's value when it is an int.
     odddotnet.proto.common.v1.Int64Property value_as_int = 4;
     odddotnet.proto.common.v1.ByteStringProperty span_id = 5;
     odddotnet.proto.common.v1.ByteStringProperty trace_id = 6;
   }
 }
 
+// OrFilter matches when ANY of its nested Where clauses matches (logical OR),
+// letting you express disjunctions inside the otherwise-AND filter list.
 message OrFilter {
   repeated Where filters = 1;
 }
 
+// AggregationTemporalityProperty compares a metric's aggregation temporality
+// against an OTLP AggregationTemporality via EQUALS / NOT_EQUALS. See
+// EnumCompareAsType.
 message AggregationTemporalityProperty {
   odddotnet.proto.common.v1.EnumCompareAsType compare_as = 1;
   opentelemetry.proto.metrics.v1.AggregationTemporality compare = 2;
 }
 
+// ValueAtQuantileFilter matches one (quantile, value) pair of a summary data
+// point. Set exactly one field; an unset filter matches nothing.
 message ValueAtQuantileFilter {
   oneof property {
+    // Match the quantile (e.g. 0.99).
     odddotnet.proto.common.v1.DoubleProperty quantile = 1;
+    // Match the value recorded at that quantile.
     odddotnet.proto.common.v1.DoubleProperty value = 2;
   }
-    
 }
