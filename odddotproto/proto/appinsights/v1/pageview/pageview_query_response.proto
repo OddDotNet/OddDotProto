@@ -10,6 +10,9 @@ option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
 option java_outer_classname = "PageViewQueryResponseProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
 
+// PageViewQueryResponse is the unary Query reply: every page-view item that
+// matched. Empty when the wait ended with no match. StreamQuery streams the
+// FlatPageView items individually instead.
 message PageViewQueryResponse {
   repeated FlatPageView page_views = 1;
 }

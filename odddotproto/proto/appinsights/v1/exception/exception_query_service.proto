@@ -14,8 +14,12 @@ option java_package = "io.odddotnet.proto.appinsights.v1.exception";
 option java_outer_classname = "ExceptionQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/exception";
 
+// ExceptionQueryService queries the exception telemetry the sink has received.
 service ExceptionQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(ExceptionQueryRequest) returns (ExceptionQueryResponse);
+  // StreamQuery streams each FlatException as it matches, over the same window.
   rpc StreamQuery(ExceptionQueryRequest) returns (stream FlatException);
+  // Reset clears the sink's buffered exception telemetry.
   rpc Reset(ExceptionResetRequest) returns (ExceptionResetResponse);
 }

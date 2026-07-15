@@ -10,6 +10,9 @@ option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
 option java_outer_classname = "DependencyQueryResponseProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
 
+// DependencyQueryResponse is the unary Query reply: every dependency item that
+// matched. Empty when the wait ended with no match. StreamQuery streams the
+// FlatDependency items individually instead.
 message DependencyQueryResponse {
   repeated FlatDependency dependencies = 1;
 }

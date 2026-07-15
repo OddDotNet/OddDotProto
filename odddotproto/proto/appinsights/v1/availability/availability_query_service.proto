@@ -14,8 +14,13 @@ option java_package = "io.odddotnet.proto.appinsights.v1.availability";
 option java_outer_classname = "AvailabilityQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/availability";
 
+// AvailabilityQueryService queries the availability telemetry the sink has
+// received.
 service AvailabilityQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(AvailabilityQueryRequest) returns (AvailabilityQueryResponse);
+  // StreamQuery streams each FlatAvailability as it matches, over the same window.
   rpc StreamQuery(AvailabilityQueryRequest) returns (stream FlatAvailability);
+  // Reset clears the sink's buffered availability telemetry.
   rpc Reset(AvailabilityResetRequest) returns (AvailabilityResetResponse);
 }

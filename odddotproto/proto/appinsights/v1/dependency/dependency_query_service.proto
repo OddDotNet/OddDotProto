@@ -14,8 +14,12 @@ option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
 option java_outer_classname = "DependencyQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
 
+// DependencyQueryService queries the dependency telemetry the sink has received.
 service DependencyQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(DependencyQueryRequest) returns (DependencyQueryResponse);
+  // StreamQuery streams each FlatDependency as it matches, over the same window.
   rpc StreamQuery(DependencyQueryRequest) returns (stream FlatDependency);
+  // Reset clears the sink's buffered dependency telemetry.
   rpc Reset(DependencyResetRequest) returns (DependencyResetResponse);
 }

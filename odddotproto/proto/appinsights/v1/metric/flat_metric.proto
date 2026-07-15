@@ -11,7 +11,11 @@ option java_package = "io.odddotnet.proto.appinsights.v1.metric";
 option java_outer_classname = "FlatMetricProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/metric";
 
+// FlatMetric is one App Insights metric telemetry item paired with the envelope
+// it arrived under — the unit every metric query returns.
 message FlatMetric {
+  // The matched metric telemetry.
   odddotnet.proto.appinsights.v1.MetricTelemetry metric = 1;
+  // The shared telemetry envelope (instrumentation key, time, context).
   odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
 }

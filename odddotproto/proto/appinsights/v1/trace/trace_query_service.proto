@@ -14,8 +14,13 @@ option java_package = "io.odddotnet.proto.appinsights.v1.trace";
 option java_outer_classname = "TraceQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/trace";
 
+// TraceQueryService queries the App Insights trace telemetry the sink has
+// received.
 service TraceQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(TraceQueryRequest) returns (TraceQueryResponse);
+  // StreamQuery streams each FlatTrace as it matches, over the same window.
   rpc StreamQuery(TraceQueryRequest) returns (stream FlatTrace);
+  // Reset clears the sink's buffered trace telemetry.
   rpc Reset(TraceResetRequest) returns (TraceResetResponse);
 }

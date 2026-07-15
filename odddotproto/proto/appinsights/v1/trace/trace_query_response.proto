@@ -10,6 +10,9 @@ option java_package = "io.odddotnet.proto.appinsights.v1.trace";
 option java_outer_classname = "TraceQueryResponseProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/trace";
 
+// TraceQueryResponse is the unary Query reply: every trace item that matched.
+// Empty when the wait ended with no match. StreamQuery streams the FlatTrace
+// items individually instead.
 message TraceQueryResponse {
   repeated FlatTrace traces = 1;
 }

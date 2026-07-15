@@ -14,15 +14,29 @@ option go_package = "go.odddotnet.io/proto/appinsights/v1";
 // ============================================================================
 // Common envelope/context filters shared by all telemetry types
 // ============================================================================
+//
+// Every App Insights telemetry item carries a TelemetryEnvelope (see
+// common.proto): the instrumentation key, timestamp, and a TelemetryContext of
+// nested context objects. These filters let a query match on that shared
+// envelope regardless of the item's telemetry type. Each filter here is a
+// oneof: set exactly one field, and an unset filter matches nothing. String
+// fields use StringProperty semantics (see properties.proto).
 
+// EnvelopeFilter matches the telemetry envelope. Set exactly one field.
 message EnvelopeFilter {
   oneof value {
+    // Match the instrumentation key.
     odddotnet.proto.common.v1.StringProperty instrumentation_key = 1;
+    // Match the ISO-8601 creation timestamp (compared as a string).
     odddotnet.proto.common.v1.StringProperty time = 2;
+    // Match a field of the telemetry context.
     ContextFilter context = 3;
   }
 }
 
+// ContextFilter matches one of the envelope's context objects. Set exactly one
+// field; the chosen sub-filter then selects which of that object's fields to
+// match.
 message ContextFilter {
   oneof value {
     OperationContextFilter operation = 1;
@@ -36,6 +50,8 @@ message ContextFilter {
   }
 }
 
+// OperationContextFilter matches one field of the operation context. Set
+// exactly one field.
 message OperationContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty id = 1;
@@ -46,6 +62,8 @@ message OperationContextFilter {
   }
 }
 
+// CloudContextFilter matches one field of the cloud context. Set exactly one
+// field.
 message CloudContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty role_name = 1;
@@ -53,6 +71,8 @@ message CloudContextFilter {
   }
 }
 
+// DeviceContextFilter matches one field of the device context. Set exactly one
+// field.
 message DeviceContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty id = 1;
@@ -61,6 +81,8 @@ message DeviceContextFilter {
   }
 }
 
+// UserContextFilter matches one field of the user context. Set exactly one
+// field.
 message UserContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty id = 1;
@@ -69,6 +91,8 @@ message UserContextFilter {
   }
 }
 
+// SessionContextFilter matches one field of the session context. Set exactly
+// one field.
 message SessionContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty id = 1;
@@ -76,6 +100,8 @@ message SessionContextFilter {
   }
 }
 
+// LocationContextFilter matches one field of the location context. Set exactly
+// one field.
 message LocationContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty ip = 1;
@@ -85,12 +111,16 @@ message LocationContextFilter {
   }
 }
 
+// ApplicationContextFilter matches the application context. Set exactly one
+// field.
 message ApplicationContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty version = 1;
   }
 }
 
+// InternalContextFilter matches one field of the internal SDK context. Set
+// exactly one field.
 message InternalContextFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty sdk_version = 1;
@@ -99,18 +129,29 @@ message InternalContextFilter {
   }
 }
 
-// Custom property/measurement filters
+// PropertyMapProperty matches one entry of a telemetry item's custom string
+// `properties` map: the entry keyed by `key` must exist AND its value must
+// satisfy `value` (StringProperty). A missing key does not match.
 message PropertyMapProperty {
+  // Map key to look up. Must be present for the filter to match.
   string key = 1;
+  // StringProperty comparison applied to the entry's value.
   odddotnet.proto.common.v1.StringProperty value = 2;
 }
 
+// MeasurementMapProperty matches one entry of a telemetry item's custom numeric
+// `measurements` map: the entry keyed by `key` must exist AND its value must
+// satisfy `value` (DoubleProperty). A missing key does not match.
 message MeasurementMapProperty {
+  // Map key to look up. Must be present for the filter to match.
   string key = 1;
+  // DoubleProperty comparison applied to the entry's value.
   odddotnet.proto.common.v1.DoubleProperty value = 2;
 }
 
-// Severity level filter (used by Exception and Trace)
+// SeverityLevelProperty compares a telemetry item's severity level against a
+// SeverityLevel via EQUALS / NOT_EQUALS. Used by Exception and Trace. See
+// EnumCompareAsType.
 message SeverityLevelProperty {
   odddotnet.proto.common.v1.EnumCompareAsType compare_as = 1;
   SeverityLevel compare = 2;

@@ -11,7 +11,11 @@ option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
 option java_outer_classname = "FlatDependencyProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
 
+// FlatDependency is one dependency-call telemetry item paired with the envelope
+// it arrived under — the unit every dependency query returns.
 message FlatDependency {
+  // The matched dependency telemetry.
   odddotnet.proto.appinsights.v1.DependencyTelemetry dependency = 1;
+  // The shared telemetry envelope (instrumentation key, time, context).
   odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
 }

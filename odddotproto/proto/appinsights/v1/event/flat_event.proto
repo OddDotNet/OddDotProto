@@ -11,7 +11,11 @@ option java_package = "io.odddotnet.proto.appinsights.v1.event";
 option java_outer_classname = "FlatEventProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/event";
 
+// FlatEvent is one custom-event telemetry item paired with the envelope it
+// arrived under — the unit every event query returns.
 message FlatEvent {
+  // The matched event telemetry.
   odddotnet.proto.appinsights.v1.EventTelemetry event = 1;
+  // The shared telemetry envelope (instrumentation key, time, context).
   odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
 }

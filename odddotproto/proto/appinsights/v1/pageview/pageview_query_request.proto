@@ -12,20 +12,36 @@ option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
 option java_outer_classname = "PageViewQueryRequestProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
 
+// PageViewQueryRequest asks the sink for page-view telemetry matching filters,
+// bounded by take and duration. See common/v1/common.proto for the shared
+// Take/Duration wait contract.
 message PageViewQueryRequest {
+  // Filters an item must satisfy to match. An item must pass every filter
+  // (logical AND); an empty list matches all page-view items.
   repeated Where filters = 1;
+
+  // How many matching items end the wait early. Defaults to TakeFirst. See Take.
   odddotnet.proto.common.v1.Take take = 2;
+
+  // Maximum time to wait for matches. Defaults to 30s. See Duration.
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
+// Where is one filter clause. Set exactly one field; an unset Where matches
+// nothing. A query ANDs its Where clauses together (see PageViewQueryRequest.filters).
 message Where {
   oneof value {
+    // Match a field of the page-view telemetry itself.
     PropertyFilter property = 1;
+    // Match when ANY of the nested clauses matches (logical OR).
     OrFilter or = 2;
+    // Match the shared telemetry envelope (key / time / context). See EnvelopeFilter.
     odddotnet.proto.appinsights.v1.EnvelopeFilter envelope = 3;
   }
 }
 
+// PropertyFilter matches a single field of the PageViewTelemetry. Set exactly
+// one field; an unset PropertyFilter matches nothing.
 message PropertyFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty id = 1;
@@ -33,11 +49,15 @@ message PropertyFilter {
     odddotnet.proto.common.v1.StringProperty url = 3;
     odddotnet.proto.common.v1.StringProperty duration = 4;
     odddotnet.proto.common.v1.StringProperty referrer_uri = 5;
+    // Match one entry of the custom string properties map. See PropertyMapProperty.
     odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 6;
+    // Match one entry of the custom numeric measurements map. See MeasurementMapProperty.
     odddotnet.proto.appinsights.v1.MeasurementMapProperty measurements = 7;
   }
 }
 
+// OrFilter matches when ANY of its nested Where clauses matches (logical OR),
+// letting you express disjunctions inside the otherwise-AND filter list.
 message OrFilter {
   repeated Where filters = 1;
 }

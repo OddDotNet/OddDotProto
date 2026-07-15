@@ -11,7 +11,11 @@ option java_package = "io.odddotnet.proto.appinsights.v1.trace";
 option java_outer_classname = "FlatTraceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/trace";
 
+// FlatTrace is one App Insights trace (log-message) telemetry item paired with
+// the envelope it arrived under — the unit every trace query returns.
 message FlatTrace {
+  // The matched trace telemetry.
   odddotnet.proto.appinsights.v1.TraceTelemetry trace = 1;
+  // The shared telemetry envelope (instrumentation key, time, context).
   odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
 }
