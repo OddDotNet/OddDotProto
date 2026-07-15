@@ -8,51 +8,103 @@ option java_package = "io.odddotnet.proto.common.v1";
 option java_outer_classname = "PropertiesProto";
 option go_package = "go.odddotnet.io/proto/otlp/common/v1";
 
+// This file defines the comparison primitives every query filter is built from.
+//
+// A *Property pairs a comparison verb (`compare_as`) with an operand
+// (`compare`): the sink evaluates `actual <compare_as> compare` against the
+// corresponding field of a signal and keeps the signal when the result is true.
+// For example a StringProperty with compare_as = STRING_COMPARE_AS_TYPE_EQUALS
+// and compare = "checkout" matches only signals whose field equals "checkout".
+//
+// These properties are the leaves of the filter tree: the per-signal filters
+// (Where / PropertyFilter on the span, log, and metric query requests),
+// InstrumentationScopeFilter, and ResourceFilter all delegate to them.
+//
+// Two rules hold across every type in this file:
+//   * `compare_as` 0 (…_NONE_UNSPECIFIED) matches NOTHING — the sink returns
+//     false for it. Leaving compare_as at its default therefore drops every
+//     signal; always set a real verb.
+//   * When many filters are supplied on one query they combine with AND, and an
+//     empty filter list matches everything. See the query-request protos.
+
+// StringProperty compares a string field.
+//
+// EQUALS / NOT_EQUALS use ordinal (byte-for-byte, case-sensitive) comparison.
+// CONTAINS / NOT_CONTAINS test for `compare` as a substring. IS_EMPTY /
+// IS_NOT_EMPTY test whether the field is null or the empty string and ignore
+// `compare`.
 message StringProperty {
   StringCompareAsType compare_as = 1;
+  // Operand to compare against. Unused (may be omitted) for IS_EMPTY and
+  // IS_NOT_EMPTY, which look only at the field itself.
   optional string compare = 2;
 }
-  
+
+// ByteStringProperty compares a bytes field (e.g. a trace or span id).
+//
+// EQUALS / NOT_EQUALS compare the raw bytes. EMPTY / NOT_EMPTY test whether the
+// field has zero length and ignore `compare`.
 message ByteStringProperty {
   ByteStringCompareAsType compare_as = 1;
+  // Operand to compare against. Unused (may be omitted) for EMPTY and NOT_EMPTY.
   optional bytes compare = 2;
 }
-  
+
+// BoolProperty compares a boolean field via EQUALS / NOT_EQUALS.
 message BoolProperty {
   BoolCompareAsType compare_as = 1;
   optional bool compare = 2;
 }
-  
+
+// UInt64Property compares an unsigned 64-bit field. Supports the full ordering
+// (equals, not-equals, and the four greater/less-than variants).
 message UInt64Property {
   NumberCompareAsType compare_as = 1;
   optional fixed64 compare = 2;
 }
-  
+
+// UInt32Property compares an unsigned 32-bit field. Supports the full ordering.
 message UInt32Property {
   NumberCompareAsType compare_as = 1;
   optional uint32 compare = 2;
 }
-  
+
+// Int64Property compares a signed 64-bit field. Supports the full ordering.
 message Int64Property {
   NumberCompareAsType compare_as = 1;
   optional int64 compare = 2;
 }
-  
+
+// Int32Property compares a signed 32-bit field. Supports the full ordering.
 message Int32Property {
   NumberCompareAsType compare_as = 1;
   optional int32 compare = 2;
 }
-  
+
+// DoubleProperty compares a double-precision field. Supports the full ordering.
 message DoubleProperty {
   NumberCompareAsType compare_as = 1;
   optional double compare = 2;
 }
-  
+
+// KeyValueProperty matches a single attribute (an OTLP KeyValue).
+//
+// The attribute matches when its key equals `key` exactly AND its value matches
+// `value`. Because `value` selects a typed comparison, the attribute's value
+// must also carry that type — a StringProperty under `value` only matches a
+// string-typed attribute, never an int- or bool-typed one.
 message KeyValueProperty {
+  // Attribute key to match, compared for exact equality.
   string key = 1;
+  // Typed comparison applied to the attribute's value.
   AnyValueProperty value = 2;
 }
-  
+
+// AnyValueProperty selects which typed comparison to apply to an OTLP AnyValue.
+//
+// Set exactly one field. The value matches only when the target carries the
+// same type as the field set here (a string_value comparison never matches a
+// numeric value); leaving the oneof unset matches nothing.
 message AnyValueProperty {
   oneof value {
     StringProperty string_value = 1;
@@ -65,50 +117,94 @@ message AnyValueProperty {
   }
 }
 
+// ArrayValueProperty matches an OTLP array value.
+//
+// It matches when EVERY element-property in `values` matches at least one
+// element of the target array (each filter element is satisfied independently;
+// elements may overlap). An empty `values` matches any array.
 message ArrayValueProperty {
   repeated AnyValueProperty values = 1;
 }
 
+// KeyValueListProperty matches a set of attributes (e.g. a signal's `attributes`
+// map, or an OTLP kvlist value).
+//
+// It matches when EVERY KeyValueProperty in `values` matches at least one entry
+// in the target list (AND across the filter's entries, existential over the
+// target). An empty `values` matches any list — so an attributes filter with no
+// entries imposes no constraint.
 message KeyValueListProperty {
   repeated KeyValueProperty values = 1;
 }
-  
+
+// NumberCompareAsType is the comparison verb for the numeric *Property types
+// (Int32/64, UInt32/64, Double).
 enum NumberCompareAsType {
+  // Matches nothing. Set a real verb.
   NUMBER_COMPARE_AS_TYPE_NONE_UNSPECIFIED = 0;
+  // actual == compare.
   NUMBER_COMPARE_AS_TYPE_EQUALS = 1;
+  // actual != compare.
   NUMBER_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  // actual > compare.
   NUMBER_COMPARE_AS_TYPE_GREATER_THAN = 3;
+  // actual >= compare.
   NUMBER_COMPARE_AS_TYPE_GREATER_THAN_EQUALS = 4;
+  // actual < compare.
   NUMBER_COMPARE_AS_TYPE_LESS_THAN = 5;
+  // actual <= compare.
   NUMBER_COMPARE_AS_TYPE_LESS_THAN_EQUALS = 6;
 }
-  
+
+// EnumCompareAsType is the comparison verb for enum-valued signal fields, used
+// by the signal-specific enum properties (e.g. span kind, span status code).
 enum EnumCompareAsType {
+  // Matches nothing. Set a real verb.
   ENUM_COMPARE_AS_TYPE_NONE_UNSPECIFIED = 0;
+  // actual == compare.
   ENUM_COMPARE_AS_TYPE_EQUALS = 1;
+  // actual != compare.
   ENUM_COMPARE_AS_TYPE_NOT_EQUALS = 2;
 }
-  
+
+// BoolCompareAsType is the comparison verb for BoolProperty.
 enum BoolCompareAsType {
+  // Matches nothing. Set a real verb.
   BOOL_COMPARE_AS_TYPE_NONE_UNSPECIFIED = 0;
+  // actual == compare.
   BOOL_COMPARE_AS_TYPE_EQUALS = 1;
+  // actual != compare.
   BOOL_COMPARE_AS_TYPE_NOT_EQUALS = 2;
 }
-  
+
+// ByteStringCompareAsType is the comparison verb for ByteStringProperty.
 enum ByteStringCompareAsType {
+  // Matches nothing. Set a real verb.
   BYTE_STRING_COMPARE_AS_TYPE_NONE_UNSPECIFIED = 0;
+  // Raw bytes equal compare.
   BYTE_STRING_COMPARE_AS_TYPE_EQUALS = 1;
+  // Raw bytes do not equal compare.
   BYTE_STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  // Field has zero length. `compare` is ignored.
   BYTE_STRING_COMPARE_AS_TYPE_EMPTY = 3;
+  // Field has non-zero length. `compare` is ignored.
   BYTE_STRING_COMPARE_AS_TYPE_NOT_EMPTY = 4;
 }
-  
+
+// StringCompareAsType is the comparison verb for StringProperty.
 enum StringCompareAsType {
+  // Matches nothing. Set a real verb.
   STRING_COMPARE_AS_TYPE_NONE_UNSPECIFIED = 0;
+  // Ordinal (case-sensitive) equality with compare.
   STRING_COMPARE_AS_TYPE_EQUALS = 1;
+  // Ordinal inequality with compare.
   STRING_COMPARE_AS_TYPE_NOT_EQUALS = 2;
+  // Field contains compare as a substring.
   STRING_COMPARE_AS_TYPE_CONTAINS = 3;
+  // Field does not contain compare as a substring.
   STRING_COMPARE_AS_TYPE_NOT_CONTAINS = 4;
+  // Field is null or the empty string. `compare` is ignored.
   STRING_COMPARE_AS_TYPE_IS_EMPTY = 5;
+  // Field is neither null nor empty. `compare` is ignored.
   STRING_COMPARE_AS_TYPE_IS_NOT_EMPTY = 6;
 }

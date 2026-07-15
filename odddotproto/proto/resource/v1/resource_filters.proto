@@ -10,9 +10,17 @@ option java_package = "io.odddotnet.proto.resource.v1";
 option java_outer_classname = "ResourceProto";
 option go_package = "go.odddotnet.io/proto/otlp/resource/v1";
 
+// ResourceFilter matches a signal's resource on one of its fields.
+//
+// Set exactly one field: the filter constrains only that dimension of the
+// resource. Leaving the oneof unset matches nothing. To constrain both
+// dimensions, add two ResourceFilters to the query — filters combine with AND
+// (see the query-request protos).
 message ResourceFilter {
   oneof value {
+    // Match the resource's attributes (e.g. service.name, host.name).
     odddotnet.proto.common.v1.KeyValueListProperty attributes = 1;
+    // Match the count of attributes dropped from the resource.
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 2;
   }
 }
