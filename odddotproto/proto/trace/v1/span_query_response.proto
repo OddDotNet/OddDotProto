@@ -10,6 +10,9 @@ option java_package = "io.odddotnet.proto.trace.v1";
 option java_outer_classname = "SpanQueryResponseProto";
 option go_package = "go.odddotnet.io/proto/otlp/trace/v1";
 
+// SpanQueryResponse is the unary Query reply: every span that matched, each
+// flattened with its resource and scope. Empty when the wait ended with no
+// match. StreamQuery streams the FlatSpans individually instead.
 message SpanQueryResponse {
   repeated FlatSpan spans = 1;
 }

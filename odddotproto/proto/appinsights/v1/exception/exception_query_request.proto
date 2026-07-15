@@ -12,31 +12,51 @@ option java_package = "io.odddotnet.proto.appinsights.v1.exception";
 option java_outer_classname = "ExceptionQueryRequestProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/exception";
 
+// ExceptionQueryRequest asks the sink for exception telemetry matching filters,
+// bounded by take and duration. See common/v1/common.proto for the shared
+// Take/Duration wait contract.
 message ExceptionQueryRequest {
+  // Filters an item must satisfy to match. An item must pass every filter
+  // (logical AND); an empty list matches all exception items.
   repeated Where filters = 1;
+  // How many matching items end the wait early. Defaults to TakeFirst. See Take.
   odddotnet.proto.common.v1.Take take = 2;
+  // Maximum time to wait for matches. Defaults to 30s. See Duration.
   optional odddotnet.proto.common.v1.Duration duration = 3;
 }
 
+// Where is one filter clause. Set exactly one field; an unset Where matches
+// nothing. A query ANDs its Where clauses together (see ExceptionQueryRequest.filters).
 message Where {
   oneof value {
+    // Match a field of the exception telemetry itself.
     PropertyFilter property = 1;
+    // Match when ANY of the nested clauses matches (logical OR).
     OrFilter or = 2;
+    // Match the shared telemetry envelope (key / time / context). See EnvelopeFilter.
     odddotnet.proto.appinsights.v1.EnvelopeFilter envelope = 3;
   }
 }
 
+// PropertyFilter matches a single field of the ExceptionTelemetry. Set exactly
+// one field; an unset PropertyFilter matches nothing.
 message PropertyFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty id = 1;
     odddotnet.proto.common.v1.StringProperty problem_id = 2;
+    // Match the exception's severity level. See SeverityLevelProperty.
     odddotnet.proto.appinsights.v1.SeverityLevelProperty severity_level = 3;
+    // Match when ANY exception in the item's chain satisfies the filter.
     ExceptionDetailsFilter exception_details = 4;
+    // Match one entry of the custom string properties map. See PropertyMapProperty.
     odddotnet.proto.appinsights.v1.PropertyMapProperty properties = 5;
+    // Match one entry of the custom numeric measurements map. See MeasurementMapProperty.
     odddotnet.proto.appinsights.v1.MeasurementMapProperty measurements = 6;
   }
 }
 
+// ExceptionDetailsFilter matches one exception within an item's exception
+// chain. Set exactly one field; an unset filter matches nothing.
 message ExceptionDetailsFilter {
   oneof value {
     odddotnet.proto.common.v1.StringProperty type_name = 1;
@@ -46,6 +66,8 @@ message ExceptionDetailsFilter {
   }
 }
 
+// OrFilter matches when ANY of its nested Where clauses matches (logical OR),
+// letting you express disjunctions inside the otherwise-AND filter list.
 message OrFilter {
   repeated Where filters = 1;
 }

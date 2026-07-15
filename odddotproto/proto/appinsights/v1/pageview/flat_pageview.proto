@@ -11,7 +11,11 @@ option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
 option java_outer_classname = "FlatPageViewProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
 
+// FlatPageView is one page-view telemetry item paired with the envelope it
+// arrived under — the unit every page-view query returns.
 message FlatPageView {
+  // The matched page-view telemetry.
   odddotnet.proto.appinsights.v1.PageViewTelemetry page_view = 1;
+  // The shared telemetry envelope (instrumentation key, time, context).
   odddotnet.proto.appinsights.v1.TelemetryEnvelope envelope = 2;
 }

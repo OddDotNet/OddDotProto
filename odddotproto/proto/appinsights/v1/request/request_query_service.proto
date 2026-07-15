@@ -14,8 +14,12 @@ option java_package = "io.odddotnet.proto.appinsights.v1.request";
 option java_outer_classname = "RequestQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/request";
 
+// RequestQueryService queries the request telemetry the sink has received.
 service RequestQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(RequestQueryRequest) returns (RequestQueryResponse);
+  // StreamQuery streams each FlatRequest as it matches, over the same window.
   rpc StreamQuery(RequestQueryRequest) returns (stream FlatRequest);
+  // Reset clears the sink's buffered request telemetry.
   rpc Reset(RequestResetRequest) returns (RequestResetResponse);
 }

@@ -10,6 +10,9 @@ option java_package = "io.odddotnet.proto.appinsights.v1.availability";
 option java_outer_classname = "AvailabilityQueryResponseProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/availability";
 
+// AvailabilityQueryResponse is the unary Query reply: every availability item
+// that matched. Empty when the wait ended with no match. StreamQuery streams
+// the FlatAvailability items individually instead.
 message AvailabilityQueryResponse {
   repeated FlatAvailability availabilities = 1;
 }

@@ -10,11 +10,22 @@ option java_package = "io.odddotnet.proto.common.v1";
 option java_outer_classname = "FiltersProto";
 option go_package = "go.odddotnet.io/proto/otlp/common/v1";
 
+// InstrumentationScopeFilter matches a signal's instrumentation scope on one of
+// its fields.
+//
+// Set exactly one field: the filter constrains only that dimension of the
+// scope. Leaving the oneof unset matches nothing. To constrain several
+// dimensions at once, add several InstrumentationScopeFilters to the query —
+// filters combine with AND (see the query-request protos).
 message InstrumentationScopeFilter {
   oneof value {
+    // Match the scope name (e.g. the library name).
     odddotnet.proto.common.v1.StringProperty name = 1;
+    // Match the scope's attributes.
     odddotnet.proto.common.v1.KeyValueListProperty attributes = 2;
+    // Match the scope version.
     odddotnet.proto.common.v1.StringProperty version = 3;
+    // Match the count of attributes dropped from the scope.
     odddotnet.proto.common.v1.UInt32Property dropped_attributes_count = 4;
   }
 }

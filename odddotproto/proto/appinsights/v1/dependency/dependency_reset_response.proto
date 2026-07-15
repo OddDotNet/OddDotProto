@@ -8,5 +8,6 @@ option java_package = "io.odddotnet.proto.appinsights.v1.dependency";
 option java_outer_classname = "DependencyResetResponseProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/dependency";
 
+// DependencyResetResponse is the empty acknowledgement that a reset completed.
 message DependencyResetResponse {
 }

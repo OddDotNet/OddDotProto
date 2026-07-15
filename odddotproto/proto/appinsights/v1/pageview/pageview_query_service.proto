@@ -14,8 +14,12 @@ option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
 option java_outer_classname = "PageViewQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
 
+// PageViewQueryService queries the page-view telemetry the sink has received.
 service PageViewQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(PageViewQueryRequest) returns (PageViewQueryResponse);
+  // StreamQuery streams each FlatPageView as it matches, over the same window.
   rpc StreamQuery(PageViewQueryRequest) returns (stream FlatPageView);
+  // Reset clears the sink's buffered page-view telemetry.
   rpc Reset(PageViewResetRequest) returns (PageViewResetResponse);
 }

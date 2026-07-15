@@ -12,10 +12,24 @@ option java_package = "io.odddotnet.proto.metrics.v1";
 option java_outer_classname = "FlatMetricProto";
 option go_package = "go.odddotnet.io/proto/otlp/metrics/v1";
 
+// FlatMetric is one metric paired with the resource and instrumentation scope
+// it arrived under — the unit every metric query returns.
+//
+// OTLP nests metrics (ResourceMetrics -> ScopeMetrics -> Metric) so context is
+// not repeated on the wire; the sink flattens that hierarchy back onto each
+// metric so a single result carries everything needed to interpret it. The
+// `metric`, `resource`, and `instrumentation_scope` fields are the upstream
+// OpenTelemetry messages — see the opentelemetry-proto docs for their contents;
+// only the flattening and the two schema-url fields are added here.
 message FlatMetric {
+  // The matched metric (upstream OTLP Metric).
   opentelemetry.proto.metrics.v1.Metric metric = 1;
+  // Resource the metric was reported under (upstream OTLP Resource).
   opentelemetry.proto.resource.v1.Resource resource = 2;
+  // Instrumentation scope the metric was reported under (upstream OTLP).
   opentelemetry.proto.common.v1.InstrumentationScope instrumentation_scope = 3;
+  // Schema URL associated with the resource.
   string resource_schema_url = 4;
+  // Schema URL associated with the instrumentation scope.
   string instrumentation_scope_schema_url = 5;
 }

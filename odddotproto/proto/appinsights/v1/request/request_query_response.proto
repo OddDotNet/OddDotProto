@@ -10,6 +10,9 @@ option java_package = "io.odddotnet.proto.appinsights.v1.request";
 option java_outer_classname = "RequestQueryResponseProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/request";
 
+// RequestQueryResponse is the unary Query reply: every request item that
+// matched. Empty when the wait ended with no match. StreamQuery streams the
+// FlatRequest items individually instead.
 message RequestQueryResponse {
   repeated FlatRequest requests = 1;
 }

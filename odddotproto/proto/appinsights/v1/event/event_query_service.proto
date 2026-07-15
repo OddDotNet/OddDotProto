@@ -14,8 +14,12 @@ option java_package = "io.odddotnet.proto.appinsights.v1.event";
 option java_outer_classname = "EventQueryServiceProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/event";
 
+// EventQueryService queries the custom-event telemetry the sink has received.
 service EventQueryService {
+  // Query waits per the request's Take/Duration, then returns all matches at once.
   rpc Query(EventQueryRequest) returns (EventQueryResponse);
+  // StreamQuery streams each FlatEvent as it matches, over the same window.
   rpc StreamQuery(EventQueryRequest) returns (stream FlatEvent);
+  // Reset clears the sink's buffered event telemetry.
   rpc Reset(EventResetRequest) returns (EventResetResponse);
 }

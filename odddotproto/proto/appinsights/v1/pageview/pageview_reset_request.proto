@@ -8,5 +8,7 @@ option java_package = "io.odddotnet.proto.appinsights.v1.pageview";
 option java_outer_classname = "PageViewResetRequestProto";
 option go_package = "go.odddotnet.io/proto/appinsights/v1/pageview";
 
+// PageViewResetRequest asks the sink to discard every buffered page-view item.
+// It takes no arguments; the reset is unconditional.
 message PageViewResetRequest {
 }
